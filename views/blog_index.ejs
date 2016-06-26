@@ -1,0 +1,22 @@
+<% include header %>
+
+<% function logArrayElements(blogpost, index, postList) {
+	var firstPPosition = blogpost.html.indexOf('</p>') %>
+	<article lang="<%- blogpost.lang %>">
+
+	<% if(firstPPosition === -1) { %>
+		<%- blogpost.html %>
+	<% } else { %>
+		<%- blogpost.html.substr(0, firstPPosition + 4) %>
+	<% } %>
+
+	<a href="/blog/<%- blogpost._id.toString().substr(0, 8) %>">Read more</a></article>
+
+	<% if(index !== postList.length - 1) { %>
+		<hr/>
+	<% } %>
+<% } %>
+
+<% postList.forEach(logArrayElements); %>
+
+<% include footer %>

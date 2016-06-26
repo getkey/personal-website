@@ -1,0 +1,22 @@
+<% include header %>
+
+<form method="post" action="<% if(id === null) { %>/blog/write<% } else { %><%= '/blog/' + id + '/edit/' %><% } %>">
+
+<textarea name="post" rows="32" placeholder="Write a new blog post here. GFM allowed!"><% if(typeof placeholder !== 'undefined') { %><%- placeholder %><% } %></textarea>
+
+<div class="table">
+<label class="row"><span class="cell">Tags:</span><input class="cell" type="text" name="tags" <% if(tags !== null) { -%>
+value="<% if(typeof tags !== 'undefined') { -%>
+<%- tags.join(', '); -%>
+<% } -%>"
+<% } %>/></label>
+<label class="row"><span class="cell">Password:</span><input class="cell" type="password" name="password"/></label>
+</div>
+<select name="lang">
+	<option value="en" selected>English</option>
+	<option value="fr">Français</option>
+</select>
+<input type="submit"/>
+</form>
+
+<% include footer %>

@@ -1,0 +1,12 @@
+<% include header %>
+
+<article lang="<%- lang %>">
+<%- articleTxt %>
+</article>
+
+<% if(tags !== null) { -%>
+<div>Tags:<% tags.forEach(function(tag) { -%>
+ <a href="/blog/tag/<%- tag %>"><%- tag %></a><% }); %></div>
+<% } -%>
+
+<% include footer %>

@@ -1,0 +1,139 @@
+body {
+	color: #3a4145;
+	font-family: Merriweather, serif;
+	margin: 0;
+}
+main {
+	max-width: 80ch;
+	margin: 4% auto 4% auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 600;
+	line-height: 1.2;
+	margin: 2rem 0 1.9rem 0;
+}
+/* font-size scale: perfect fourth */
+h1 {
+	font-size: 3.157rem;
+	font-weight: 700;
+	text-align: center;
+	line-height: 1.1;
+}
+h2 {
+	font-size: 2.369em;
+}
+h3 {
+	font-size: 1.777rem;
+}
+h4 {
+	font-size: 1.333rem;
+}
+h5 {
+	font-size: 1rem;
+}
+h6 {
+	font-size: 0.75rem;
+}
+
+p, li {
+	font-size: 1.15rem;
+	line-height: 1.725rem;
+}
+
+header, nav {
+	background-color: #34495e;
+}
+nav {
+	position: sticky;
+	top: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.4);
+	padding: 0 3% 0 3%;
+}
+nav ul {
+	display: flex;
+	justify-content: flex-start;
+	margin: 0;
+	padding: 0;
+}
+nav ul li {
+	list-style-type: none;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+nav ul li:hover {
+	background-color: #2C3E50;
+}
+nav ul li a {
+	display: inline-block;
+	text-decoration: none;
+	padding: 1.1rem 1.1rem 1.05rem 1.1rem;
+}
+nav ul li a, header h1, nav form input {
+	color: white;
+}
+nav ul li a, nav form input {
+	font-size: 2rem;
+	font-family: "Open Sans";
+	font-weight: 300;
+}
+nav form {
+	margin-right: 1.1rem;
+	border-bottom: medium solid white;
+}
+nav form input {
+	max-width: 10ch;
+	background-color: transparent;
+	border: none;
+}
+nav form button {
+	background-color: transparent;
+	border: none;
+}
+nav form button img {
+	width: 2rem;
+}
+
+header {
+	padding: 1.2% 0 1.2% 0;
+}
+header h1 {
+	margin: 0;
+	/* TODO: find another font */
+	letter-spacing: 0.2rem;
+}
+
+iframe, main form textarea {
+	width: 100%;
+}
+
+main form .table {
+	display: table;
+}
+main form .table .row {
+	display: table-row;
+}
+main form .table .row .cell {
+	display: table-cell;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.4), transparent);
+}
+
+article {
+	margin: 6% 0 6% 0;
+}
+article h1 {
+	margin-top: 0;
+}
+
+.highlight {
+	overflow-x: scroll;
+}

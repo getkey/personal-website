@@ -1,0 +1,11 @@
+/node_modules
+
+# certificates and such
+/tls
+/hash.txt
+
+# stuff I put on the serevr to send/share with my friends
+/shared
+
+# resources included in blog posts
+/static/blog
