@@ -1,0 +1,13 @@
+[Unit]
+Description=Getkey's Node.js server behind Nginx
+
+[Service]
+ExecStart=/usr/bin/nodejs /home/getkey/personal-website/server.js
+Type=simple
+Restart=always
+User=getkey
+Group=getkey
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

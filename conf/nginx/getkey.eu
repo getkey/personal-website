@@ -1,0 +1,41 @@
+server {
+	listen 80;
+	server_name getkey.eu localhost $hostname;
+
+	return 301 https://$http_host$request_uri;
+}
+
+#map $request_uri $loggable {#conditional logging has been added in nginx version 1.7.0
+#	default 1;
+#}
+map $http_upgrade $connection_upgrade {
+	default upgrade;
+	'' close;
+}
+server {
+	listen 443 ssl;
+	server_name getkey.eu localhost $hostname;
+
+	ssl_certificate /home/getkey/getkey-s-personal-website/tls/getkey.eu.chained.crt;
+	ssl_certificate_key /home/getkey/getkey-s-personal-website/tls/getkey.eu.key;
+
+	location / {
+		alias /home/getkey/getkey-s-personal-website/;
+		try_files static/$uri shared/$uri @node;
+	}
+	location @node {
+		proxy_pass http://localhost:8080;
+	}
+
+	access_log /var/log/nginx/getkey_access.log combined;
+}
+
+server {
+	listen 80;
+	listen 443;
+	server_name _;
+
+	return 303 http://perdu.com;
+
+	access_log /var/log/nginx/ip_access.log combined;
+}
