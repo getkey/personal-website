@@ -16,15 +16,15 @@ server {
 	listen 443 ssl;
 	server_name getkey.eu localhost $hostname;
 
-	ssl_certificate /home/getkey/getkey-s-personal-website/tls/getkey.eu.chained.crt;
-	ssl_certificate_key /home/getkey/getkey-s-personal-website/tls/getkey.eu.key;
+	ssl_certificate ${HOME}/personal-website/tls/getkey.eu.chained.crt;
+	ssl_certificate_key ${HOME}/personal-website/tls/getkey.eu.key;
 
 	location / {
-		alias /home/getkey/getkey-s-personal-website/;
+		alias ${HOME}/personal-website/;
 		try_files static/$uri shared/$uri @node;
 	}
 	location @node {
-		proxy_pass http://localhost:8080;
+		proxy_pass http://localhost:${SERVER_PORT};
 	}
 
 	access_log /var/log/nginx/getkey_access.log combined;

@@ -2,11 +2,11 @@
 Description=Getkey's Node.js server behind Nginx
 
 [Service]
-ExecStart=/usr/bin/nodejs /home/getkey/personal-website/server.js
+ExecStart=${NODE_PATH} ${HOME}/personal-website/server.js ${SERVER_PORT}
 Type=simple
 Restart=always
-User=getkey
-Group=getkey
+User=${USER}
+Group=${USER}
 Environment=NODE_ENV=production
 
 [Install]

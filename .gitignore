@@ -4,6 +4,9 @@
 /tls
 /hash.txt
 
+# generated config files for Nginx and systemd
+/generated
+
 # stuff I put on the serevr to send/share with my friends
 /shared
 

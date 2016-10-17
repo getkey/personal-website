@@ -4,7 +4,7 @@ var express = require('express'),
 	server = require('http').Server(app);
 
 
-server.listen(8080);
+server.listen(parseInt(process.argv[2], 10));
 
 app.set('views', __dirname + '/views');
 if (process.env.NODE_ENV === 'development') app.use(express.static('static'));
