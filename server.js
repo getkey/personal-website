@@ -1,28 +1,46 @@
-var express = require('express'),
-	app = express(),
+const Koa = require('koa'),
+	router = require('koa-route'),
+	co = require('co'),
+	render = require('koa-ejs'),
 
-	server = require('http').Server(app);
+	app = new Koa();
+
+render(app, {
+	root: __dirname + '/view',
+	layout: false,
+	viewExt: 'ejs',
+	cache: false,
+	debug: true
+});
+app.context.render = co.wrap(app.context.render);
+
+app.use(require('koa-bodyparser')());
 
 
-server.listen(parseInt(process.argv[2], 10));
+if (app.env === 'development') { // on prod server nginx handles this
+	const serve = require('koa-static');
+	app.use(serve(__dirname + '/static'));
+}
 
-app.set('views', __dirname + '/views');
-if (process.env.NODE_ENV === 'development') app.use(express.static('static'));
 
+require('./blog.js')(app, router);
 
-require('./blog.js')(app);
+app.use(router.get('/search', async ctx => {
+	await ctx.render('search', {
+		keywords: ctx.request.query.q
+	});
+}));
 
-app.get('/search', function (req, res) {
-	res.render('search.ejs', {keywords: req.query.q});
-})
-.get('/about', function (req, res) {
-	res.render('about.ejs');
+app.use(router.get('/about', async ctx => {
+	await ctx.render('about');
+}));
+
+app.use(async ctx => {
+	await ctx.render('404');
 });
 
 
-/* 404 */
-app.use(function (req, res, next) {
-	res.render('404.ejs');
-})
+
+app.listen(parseInt(process.argv[2], 10));
 
 console.log('The server is up !');

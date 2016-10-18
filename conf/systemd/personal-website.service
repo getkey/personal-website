@@ -2,7 +2,7 @@
 Description=Getkey's Node.js server behind Nginx
 
 [Service]
-ExecStart=${NODE_PATH} ${HOME}/personal-website/server.js ${SERVER_PORT}
+ExecStart=${NODE_PATH} ${HOME}/personal-website/hook.js ${SERVER_PORT}
 Type=simple
 Restart=always
 User=${USER}

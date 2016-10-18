@@ -1,16 +1,17 @@
-module.exports = function(app) {
-	var mongoose = require('mongoose'),
-		bodyParser = require('body-parser'),
-		urlencodedParser = bodyParser.urlencoded({extended: false}),
-
+module.exports = function(app, router) {
+	const mongoose = require('mongoose'),
 		marked = require('marked'),
 		pygmentize = require('pygmentize-bundled'),
 		bcrypt = require('bcrypt'),
 		fs = require('fs');
 
+    mongoose.Promise = global.Promise;
+
 	var renderer = new marked.Renderer();
 
-	renderer.code = function (text) {return text;};//the code is already formated by pygmentize, so we prevent marked from doing it too
+	renderer.code = function (text) {
+		return text; // the code is already formated by pygmentize, so we prevent marked from doing it too
+	};
 
 	renderer.heading = function(text, level) {//I don't want to have ids in my titles
 		return '<h' + level + '>'
@@ -76,81 +77,106 @@ module.exports = function(app) {
 	}
 
 	function validPassword(password) {
+		if (password === undefined) return false;
+
 		return bcrypt.compareSync(password, fs.readFileSync('hash.txt', {encoding: 'utf-8'}));
 	}
 
-	app.get(['/', '/blog'], function (req, res) {
-		BlogPost.find({}, null, {sort: {_id: -1}}, function (err, postList) {
-			res.render('blog_index.ejs', {postList: postList});
+	app.use(router.get(['/', '/blog'], async ctx => {
+		let postList = await BlogPost.find({}, null, {sort: {_id: -1}});
+		await ctx.render('blog_index', {
+			postList: postList
 		});
-	})
-	.get('/blog/tag/:tag', function (req, res) {
-		BlogPost.find({tags: req.params.tag}, null, {sort: {_id: -1}}, function (err, postList) {
-			res.render('blog_index.ejs', {postList: postList});
+	}));
+
+	app.use(router.get('/blog/tag/:tag', async (ctx, tag) => {
+		let postList = await BlogPost.find({tags: tag}, null, {sort: {_id: -1}});
+		await ctx.render('blog_index', {
+			postList: postList
 		});
-	})
-	.get('/blog/write', function (req, res) {
-		res.render('blog_write.ejs', {id: null, tags: null});
-	})
-	.get('/blog/:artclTmstp/edit', function (req, res) {
-		var artId = req.params.artclTmstp;
+	}));
 
-		BlogPost.findById({$gt: artId + '0000000000000000', $lt: artId + 'ffffffffffffffff'}, function (err, article) {
-			if (err) {return console.error(err);}
-
-			res.render('blog_write.ejs', {id: artId, placeholder: article.md, tags: article.tags});
-
+	app.use(router.get('/blog/write', async ctx => {
+		await ctx.render('blog_write', {
+			id: null,
+			tags: null
 		});
+	}));
+	app.use(router.post('/blog/write', async ctx => {
+		let tags = ctx.request.body.tags,
+			password = ctx.request.body.password,
+			post = ctx.request.body.post,
+			lang = ctx.request.body.lang;
 
-	})
-	.get('/blog/:artclTmstp', function (req, res, next) {
-		var artId = req.params.artclTmstp;
-
-		if(/[\da-f]{8}/.test(artId)){
-			BlogPost.findById({$gt: artId + '0000000000000000', $lt: artId + 'ffffffffffffffff'}, function (err, article) {
-				if (err) {return console.error(err);}
-
-				if (article !== null) {
-					res.render('blog_render.ejs', {articleTxt: article.html, tags: article.tags, lang: article.lang});
-				} else {
-					next();
-				}
-			});
-		} else {
-			next();
-		}
-	})
-	.post('/blog/write', urlencodedParser, function (req, res) {
-		var tags = req.body.tags;
-
-		if (validPassword(req.body.password) && req.body.post && typeof tags === 'string' && req.body.lang) {
+		if (post !== undefined && tags !== undefined && lang !== undefined && validPassword(password)) {
 			tags = tags === "" ? null : tags.split(', ');
 
-			var newPost = new BlogPost({md: req.body.post, tags: tags, lang: req.body.lang});
-			marked(req.body.post, setHtmlAndSave.bind(newPost));
-
-			res.redirect('/blog/' + newPost._id.toString().slice(0, -16));//may 404 if the markdown is slow to render
-		} else {
-			res.send('Wrong password!');
-		}
-	})
-	.post('/blog/:artclTmstp/edit', urlencodedParser, function (req, res, next) {
-		var artId = req.params.artclTmstp,
-			tags = req.body.tags;
-
-		if (/[\da-f]{8}/.test(artId) && validPassword(req.body.password) && req.body.post && typeof tags === 'string' && req.body.lang){
-			BlogPost.findById({$gt: artId + '0000000000000000', $lt: artId + 'ffffffffffffffff'}, function (err, article) {
-				if (err) {return console.error(err);}
-
-				article.tags = tags === "" ? null : tags.split(', ');
-				article.md = req.body.post;
-				article.lang = req.body.lang
-				marked(req.body.post, setHtmlAndSave.bind(article));
-
-				res.redirect('/blog/' + artId);//may not be up-to-date if the markdown is slow to render
+			var newPost = new BlogPost({
+				md: post,
+				tags,
+				lang
 			});
+			marked(post, setHtmlAndSave.bind(newPost));
+
+			ctx.redirect('/blog/' + newPost._id.toString().slice(0, -16)); // may 404 if the markdown is slow to render
 		} else {
-			res.send('Wrong password!');
+			await ctx.render('wrong_password');
 		}
-	});
+	}));
+
+	app.use(router.get('/blog/:artclTmstp', async (ctx, artId, next) => {
+		if (/[\da-f]{8}/.test(artId)) {
+			let article = await BlogPost.findById({
+				$gt: artId + '0000000000000000',
+				$lt: artId + 'ffffffffffffffff'
+			});
+
+			if (article !== null) {
+				await ctx.render('blog_render', {
+					articleTxt: article.html,
+					tags: article.tags, lang: article.lang
+				});
+			} else {
+				await next();
+			}
+		} else {
+			await next();
+		}
+	}));
+	app.use(router.get('/blog/:artclTmstp/edit', async (ctx, artId) => {
+		let article = await BlogPost.findById({
+			$gt: artId + '0000000000000000',
+			$lt: artId + 'ffffffffffffffff'
+		});
+
+		await ctx.render('blog_write', {
+			id: artId,
+			placeholder: article.md,
+			tags: article.tags
+		});
+	}));
+
+	app.use(router.post('/blog/:artclTmstp/edit', async (ctx, artId) => {
+		let tags = ctx.request.body.tags,
+			password = ctx.request.body.password,
+			post = ctx.request.body.post,
+			lang = ctx.request.body.lang;
+
+		if (/[\da-f]{8}/.test(artId) && post !== undefined && tags !== undefined && lang !== undefined && validPassword(password)) {
+			let article = await BlogPost.findById({
+				$gt: artId + '0000000000000000',
+				$lt: artId + 'ffffffffffffffff'
+			});
+			if (err) {return console.error(err);}
+
+			article.tags = tags === "" ? null : tags.split(', ');
+			article.md = post;
+			article.lang = lang
+			marked(post, setHtmlAndSave.bind(article));
+
+			ctx.redirect('/blog/' + artId);//may not be up-to-date if the markdown is slow to render
+		} else {
+			await ctx.render('wrong_password');
+		}
+	}));
 };
