@@ -1,17 +1,12 @@
 module.exports = function(app, router) {
 	const mongoose = require('mongoose'),
 		marked = require('marked'),
-		pygmentize = require('pygmentize-bundled'),
 		bcrypt = require('bcrypt'),
 		fs = require('fs');
 
-    mongoose.Promise = global.Promise;
+	mongoose.Promise = global.Promise;
 
 	var renderer = new marked.Renderer();
-
-	renderer.code = function (text) {
-		return text; // the code is already formated by pygmentize, so we prevent marked from doing it too
-	};
 
 	renderer.heading = function(text, level) {//I don't want to have ids in my titles
 		return '<h' + level + '>'
@@ -28,10 +23,8 @@ module.exports = function(app, router) {
 		sanitize: true,
 		smartLists: true,
 		smartypants: true,
-		highlight: function (code, lang, callback) {
-			pygmentize({lang: lang, format: 'html'}, code, function (err, result) {
-				callback(err, result.toString());
-			});
+		highlight: function (code) {
+			return require('highlight.js').highlightAuto(code).value;
 		}
 	});
 
@@ -52,28 +45,13 @@ module.exports = function(app, router) {
 
 	var BlogPost = mongoose.model('BlogPost', blogPostSchema);
 
-	function setHtmlAndSave(err, content) {
-		//don't forget to `bind(blogpost);`
-		if (err) {throw err};
-
+	function insertDate(html, date) {
 		var dayArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 			monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'December'],
+			addAt = html.indexOf('</h1>') + '</h1>'.length,
+			tmpDateStr = '\n<time datetime="' + date.toISOString() + '" pubdate>' + dayArray[date.getUTCDay()] + ' ' + date.getUTCDate() + ' ' + monthArray[date.getUTCMonth()] + ' ' + date.getUTCFullYear() + '</time>\n';
 
-		postDate = this._id.getTimestamp(),
-
-		addAt = content.indexOf('</h1>');
-		addAt += 5;//the end of the tab is 5 row further
-
-		var tmpDateStr = '\n<time datetime="' + postDate.toISOString() + '" pubdate>' + dayArray[postDate.getUTCDay()] + ' ' + postDate.getUTCDate() + ' ' + monthArray[postDate.getUTCMonth()] + ' ' + postDate.getUTCFullYear() + '</time>\n';
-
-		content = content.substr(0, addAt) + tmpDateStr + content.substr(addAt);
-
-		this.html = content;
-
-		this.save(function (err) {
-			if (err) {return console.error(err);}
-		});
-
+		return html.substr(0, addAt) + tmpDateStr + html.substr(addAt);
 	}
 
 	function validPassword(password) {
@@ -109,14 +87,15 @@ module.exports = function(app, router) {
 			lang = ctx.request.body.lang;
 
 		if (post !== undefined && tags !== undefined && lang !== undefined && validPassword(password)) {
-			tags = tags === "" ? null : tags.split(', ');
+			tags = tags === '' ? null : tags.split(', ');
 
 			var newPost = new BlogPost({
 				md: post,
 				tags,
 				lang
 			});
-			marked(post, setHtmlAndSave.bind(newPost));
+			newPost.html = insertDate(marked(post), newPost._id.getTimestamp());
+			await newPost.save();
 
 			ctx.redirect('/blog/' + newPost._id.toString().slice(0, -16)); // may 404 if the markdown is slow to render
 		} else {
@@ -167,12 +146,12 @@ module.exports = function(app, router) {
 				$gt: artId + '0000000000000000',
 				$lt: artId + 'ffffffffffffffff'
 			});
-			if (err) {return console.error(err);}
 
-			article.tags = tags === "" ? null : tags.split(', ');
+			article.tags = tags === '' ? null : tags.split(', ');
 			article.md = post;
-			article.lang = lang
-			marked(post, setHtmlAndSave.bind(article));
+			article.lang = lang;
+			article.html = insertDate(marked(post), article._id.getTimestamp());
+			await article.save();
 
 			ctx.redirect('/blog/' + artId);//may not be up-to-date if the markdown is slow to render
 		} else {

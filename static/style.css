@@ -22,7 +22,7 @@ h1 {
 	line-height: 1.1;
 }
 h2 {
-	font-size: 2.369em;
+	font-size: 2.369rem;
 }
 h3 {
 	font-size: 1.777rem;
@@ -134,6 +134,8 @@ article h1 {
 	margin-top: 0;
 }
 
-.highlight {
+pre {
+	background: #e2e0de;
 	overflow-x: scroll;
+	padding: 0.3rem;
 }

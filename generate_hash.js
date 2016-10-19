@@ -7,33 +7,33 @@ console.log('You have to write your password all at once; backspaces are not han
 
 process.stdout.write('Password: ');
 
-	var pw = '',
-		vpw = '',
-		toBeVerified = false;
-	process.stdin.on('data', function(char) {
-		switch (char) {
-			case '\u0003'://^C
-				process.stdout.write('\n');
-				process.exit();
-			case '\n':
-			case '\r':
-				process.stdout.write('\n');
-				if (toBeVerified) {
-					if (pw === vpw) saveHash(pw);
-					else {
-						console.log('Password does not match. Exiting...');
-						process.exit();
-					}
-				} else {
-					toBeVerified = true;
-					process.stdout.write('Confirm password: ');
+var pw = '',
+	vpw = '',
+	toBeVerified = false;
+process.stdin.on('data', function(char) {
+	switch (char) {
+		case '\u0003'://^C
+			process.stdout.write('\n');
+			process.exit();
+		case '\n':
+		case '\r':
+			process.stdout.write('\n');
+			if (toBeVerified) {
+				if (pw === vpw) saveHash(pw);
+				else {
+					console.log('Password does not match. Exiting...');
+					process.exit();
 				}
-				break;
-			default:
-				if (!toBeVerified) pw += char;
-				else vpw += char;
-		}
-	});
+			} else {
+				toBeVerified = true;
+				process.stdout.write('Confirm password: ');
+			}
+			break;
+		default:
+			if (!toBeVerified) pw += char;
+			else vpw += char;
+	}
+});
 
 function saveHash(password) {
 	var salt = bcrypt.genSaltSync(10),
