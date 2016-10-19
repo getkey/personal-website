@@ -8,6 +8,7 @@ Restart=always
 User=${USER}
 Group=${USER}
 Environment=NODE_ENV=production
+WorkingDirectory=${HOME}/personal-website/
 
 [Install]
 WantedBy=multi-user.target

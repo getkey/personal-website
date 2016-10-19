@@ -15,7 +15,5 @@ export SERVER_PORT=8083
 
 auth_vars='${USER} ${HOME} ${NODE_PATH} ${SERVER_PORT}'
 
-echo $auth_vars
-
 envsubst "$auth_vars" < ./conf/nginx/getkey.eu > ./generated/nginx/getkey.eu
 envsubst "$auth_vars" < ./conf/systemd/personal-website.service > ./generated/systemd/personal-website.service
