@@ -1,161 +1,103 @@
-module.exports = function(app, router) {
-	const mongoose = require('mongoose'),
-		marked = require('marked'),
-		bcrypt = require('bcrypt'),
-		fs = require('fs');
+const mongoose = require('mongoose'),
+	marked = require('marked'),
+	bcrypt = require('bcrypt'),
+	fs = require('fs');
 
-	mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
+let renderer = new marked.Renderer();
+marked.setOptions({
+	renderer: renderer,
+	gfm: true,
+	tables: true,
+	breaks: true,
+	pedantic: false,
+	sanitize: true,
+	smartLists: true,
+	smartypants: true,
+	highlight: function (code) {
+		return require('highlight.js').highlightAuto(code).value;
+	}
+});
 
-	var renderer = new marked.Renderer();
+mongoose.connect('mongodb://localhost/blog');
 
-	renderer.heading = function(text, level) {//I don't want to have ids in my titles
-		return '<h' + level + '>'
-		+ text
-		+ '</h' + level +'>\n';
-	};
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Mongoose: Connection error:'));
 
-	marked.setOptions({
-		renderer: renderer,
-		gfm: true,
-		tables: true,
-		breaks: true,
-		pedantic: false,
-		sanitize: true,
-		smartLists: true,
-		smartypants: true,
-		highlight: function (code) {
-			return require('highlight.js').highlightAuto(code).value;
-		}
+
+let blogPostSchema = new mongoose.Schema({
+	html: String,
+	md: String,
+	tags: [String],
+	lang: String
+});
+
+let BlogPost = mongoose.model('BlogPost', blogPostSchema);
+
+function insertDate(html, date) {
+	let dayArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+		monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'December'],
+		addAt = html.indexOf('</h1>') + '</h1>'.length,
+		tmpDateStr = '\n<time datetime="' + date.toISOString() + '" pubdate>' + dayArray[date.getUTCDay()] + ' ' + date.getUTCDate() + ' ' + monthArray[date.getUTCMonth()] + ' ' + date.getUTCFullYear() + '</time>\n';
+
+	return html.substr(0, addAt) + tmpDateStr + html.substr(addAt);
+}
+
+function validPassword(password) {
+	if (password === undefined) return false;
+
+	return bcrypt.compareSync(password, fs.readFileSync('hash.txt', {encoding: 'utf-8'}));
+}
+function validId(id) {
+	return /[\da-f]{8}/.test(id);
+}
+
+module.exports.getAllArticles = async () => {
+	return await BlogPost.find({}, null, {sort: {_id: -1}});
+};
+
+module.exports.getArticlesByTag = async (tag) => {
+	return await BlogPost.find({tags: tag}, null, {sort: {_id: -1}});
+};
+module.exports.getArticleById = async (id) => {
+	if (!validId(id)) return null;
+
+	let article = await BlogPost.findById({
+		$gt: id + '0000000000000000',
+		$lt: id + 'ffffffffffffffff'
 	});
 
+	return article;
+};
+module.exports.saveArticle = async (tags, password, post, lang, id) => {
+	if (post === undefined || tags === undefined || lang === undefined || !validPassword(password)) throw new Error('Wrong password');
 
+	tags = tags === '' ? null : tags.split(', ');
 
-	mongoose.connect('mongodb://localhost/blog');
+	let article;
+	if (id === undefined) {
+		article = new BlogPost({
+			md: post,
+			tags,
+			lang
+		});
+	} else {
+		if(!validId(id)) throw new Error('Article doesn\'t exist');
 
-	var db = mongoose.connection;
-	db.on('error', console.error.bind(console, 'Mongoose: Connection error:'));
+		article = await BlogPost.findById({
+			$gt: id + '0000000000000000',
+			$lt: id + 'ffffffffffffffff'
+		});
 
+		if (article === null) throw new Error('Article doesn\'t exist');
 
-	var blogPostSchema = new mongoose.Schema({
-		html: String,
-		md: String,
-		tags: [String],
-		lang: String
-	});
-
-	var BlogPost = mongoose.model('BlogPost', blogPostSchema);
-
-	function insertDate(html, date) {
-		var dayArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-			monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'December'],
-			addAt = html.indexOf('</h1>') + '</h1>'.length,
-			tmpDateStr = '\n<time datetime="' + date.toISOString() + '" pubdate>' + dayArray[date.getUTCDay()] + ' ' + date.getUTCDate() + ' ' + monthArray[date.getUTCMonth()] + ' ' + date.getUTCFullYear() + '</time>\n';
-
-		return html.substr(0, addAt) + tmpDateStr + html.substr(addAt);
+		article.tags = tags;
+		article.md = post;
+		article.lang = lang;
 	}
+	article.html = insertDate(marked(post), article._id.getTimestamp());
 
-	function validPassword(password) {
-		if (password === undefined) return false;
+	await article.save();
 
-		return bcrypt.compareSync(password, fs.readFileSync('hash.txt', {encoding: 'utf-8'}));
-	}
-
-	app.use(router.get(['/', '/blog'], async ctx => {
-		let postList = await BlogPost.find({}, null, {sort: {_id: -1}});
-		await ctx.render('blog_index', {
-			postList: postList
-		});
-	}));
-
-	app.use(router.get('/blog/tag/:tag', async (ctx, tag) => {
-		let postList = await BlogPost.find({tags: tag}, null, {sort: {_id: -1}});
-		await ctx.render('blog_index', {
-			postList: postList
-		});
-	}));
-
-	app.use(router.get('/blog/write', async ctx => {
-		await ctx.render('blog_write', {
-			id: null,
-			tags: null
-		});
-	}));
-	app.use(router.post('/blog/write', async ctx => {
-		let tags = ctx.request.body.tags,
-			password = ctx.request.body.password,
-			post = ctx.request.body.post,
-			lang = ctx.request.body.lang;
-
-		if (post !== undefined && tags !== undefined && lang !== undefined && validPassword(password)) {
-			tags = tags === '' ? null : tags.split(', ');
-
-			var newPost = new BlogPost({
-				md: post,
-				tags,
-				lang
-			});
-			newPost.html = insertDate(marked(post), newPost._id.getTimestamp());
-			await newPost.save();
-
-			ctx.redirect('/blog/' + newPost._id.toString().slice(0, -16)); // may 404 if the markdown is slow to render
-		} else {
-			await ctx.render('wrong_password');
-		}
-	}));
-
-	app.use(router.get('/blog/:artclTmstp', async (ctx, artId, next) => {
-		if (/[\da-f]{8}/.test(artId)) {
-			let article = await BlogPost.findById({
-				$gt: artId + '0000000000000000',
-				$lt: artId + 'ffffffffffffffff'
-			});
-
-			if (article !== null) {
-				await ctx.render('blog_render', {
-					articleTxt: article.html,
-					tags: article.tags, lang: article.lang
-				});
-			} else {
-				await next();
-			}
-		} else {
-			await next();
-		}
-	}));
-	app.use(router.get('/blog/:artclTmstp/edit', async (ctx, artId) => {
-		let article = await BlogPost.findById({
-			$gt: artId + '0000000000000000',
-			$lt: artId + 'ffffffffffffffff'
-		});
-
-		await ctx.render('blog_write', {
-			id: artId,
-			placeholder: article.md,
-			tags: article.tags
-		});
-	}));
-
-	app.use(router.post('/blog/:artclTmstp/edit', async (ctx, artId) => {
-		let tags = ctx.request.body.tags,
-			password = ctx.request.body.password,
-			post = ctx.request.body.post,
-			lang = ctx.request.body.lang;
-
-		if (/[\da-f]{8}/.test(artId) && post !== undefined && tags !== undefined && lang !== undefined && validPassword(password)) {
-			let article = await BlogPost.findById({
-				$gt: artId + '0000000000000000',
-				$lt: artId + 'ffffffffffffffff'
-			});
-
-			article.tags = tags === '' ? null : tags.split(', ');
-			article.md = post;
-			article.lang = lang;
-			article.html = insertDate(marked(post), article._id.getTimestamp());
-			await article.save();
-
-			ctx.redirect('/blog/' + artId);//may not be up-to-date if the markdown is slow to render
-		} else {
-			await ctx.render('wrong_password');
-		}
-	}));
+	return article._id.toString().slice(0, -16);
 };
