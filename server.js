@@ -42,7 +42,7 @@ async function handleSavingError(err, ctx, next) {
 			await ctx.render('wrong_password');
 			break;
 		case 'Article doesn\'t exist':
-			await next()
+			await next();
 			break;
 		default:
 			console.error(err);
@@ -71,10 +71,10 @@ app.use(router.get('/blog/write', async ctx => {
 app.use(router.post('/blog/write', async (ctx, next) => {
 	try {
 		let id = await blog.saveArticle(
-			tags = ctx.request.body.tags,
-			password = ctx.request.body.password,
-			post = ctx.request.body.post,
-			lang = ctx.request.body.lang
+			ctx.request.body.tags,
+			ctx.request.body.password,
+			ctx.request.body.post,
+			ctx.request.body.lang
 		);
 
 		ctx.redirect('/blog/' + id);
@@ -92,7 +92,7 @@ app.use(router.get('/blog/:artclTmstp', async (ctx, id, next) => {
 		tags: article.tags, lang: article.lang
 	});
 }));
-app.use(router.get('/blog/:artclTmstp/edit', async (ctx, id) => {
+app.use(router.get('/blog/:artclTmstp/edit', async (ctx, id, next) => {
 	let article = await blog.getArticleById(id);
 
 	if (article === null) await next();
@@ -106,10 +106,10 @@ app.use(router.get('/blog/:artclTmstp/edit', async (ctx, id) => {
 app.use(router.post('/blog/:artclTmstp/edit', async (ctx, reqId, next) => {
 	try {
 		let id = await blog.saveArticle(
-			tags = ctx.request.body.tags,
-			password = ctx.request.body.password,
-			post = ctx.request.body.post,
-			lang = ctx.request.body.lang,
+			ctx.request.body.tags,
+			ctx.request.body.password,
+			ctx.request.body.post,
+			ctx.request.body.lang,
 			reqId
 		);
 

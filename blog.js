@@ -20,9 +20,7 @@ marked.setOptions({
 });
 
 mongoose.connect('mongodb://localhost/blog');
-
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Mongoose: Connection error:'));
+mongoose.connection.on('error', console.error.bind(console, 'Mongoose: Connection error:'));
 
 
 let blogPostSchema = new mongoose.Schema({
@@ -75,13 +73,13 @@ module.exports.saveArticle = async (tags, password, post, lang, id) => {
 	tags = tags === '' ? null : tags.split(', ');
 
 	let article;
-	if (id === undefined) {
+	if (id === undefined) { // create a new article
 		article = new BlogPost({
 			md: post,
 			tags,
 			lang
 		});
-	} else {
+	} else { // edit saved article
 		if(!validId(id)) throw new Error('Article doesn\'t exist');
 
 		article = await BlogPost.findById({
