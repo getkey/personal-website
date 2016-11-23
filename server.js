@@ -49,18 +49,23 @@ async function handleSavingError(err, ctx, next) {
 	}
 }
 app.use(router.get(['/', '/blog'], async ctx => {
-	let postList = await blog.getAllArticles();
 	await ctx.render('blog_index', {
-		postList: postList
+		postList: await blog.getAllArticles()
 	});
 }));
 
 app.use(router.get('/blog/tag/:tag', async (ctx, tag) => {
-	let postList = await blog.getArticlesByTag(tag);
 	await ctx.render('blog_index', {
-		postList: postList
+		postList: await blog.getArticlesByTag(tag)
 	});
 }));
+
+app.use(router.get('/blog/atom.xml', async ctx => {
+	await ctx.render('atom', {
+		postList: await blog.getAllArticles()
+	});
+}));
+
 
 app.use(router.get('/blog/write', async ctx => {
 	await ctx.render('blog_write', {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Getkey's blog</title>
+	<subtitle>Interesting stuff, computer related or not</subtitle>
+	<link href="https://getkey.eu/blog/atom.xml" rel="self"/>
+	<% if (postList.length !== 0) { -%>
+		<updated><%- postList[0]._id.getTimestamp().toISOString() %></updated>
+	<% } -%>
+
+	<% for(let post of postList) { -%>
+		<entry>
+			<title><%- post.md.match(/^# ?(.+)[\n\r]+/)[1] %></title>
+			<link href="https://getkey.eu/blog/<%- post._id.toString().substr(0, 8) %>"/>
+			<id><%- post._id %></id>
+			<updated><%- post._id.getTimestamp().toISOString() %></updated>
+			<content type="html" xml:lang="<%- post.lang %>">
+				<%= post.html %>
+			</content>
+			<author>
+				<name>Getkey</name>
+				<email>getkey@getkey.eu</email>
+			</author>
+		</entry>
+	<% } -%>
+</feed>
