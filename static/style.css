@@ -128,7 +128,14 @@ hr {
 }
 
 article {
-	margin: 6% 0 6% 0;
+	margin: 6em 0;
+	padding: 1em;
+}
+article:first-child {
+	margin-top: 3em;
+}
+article:last-child {
+	margin-bottom: 3em;
 }
 article h1 {
 	margin-top: 0;

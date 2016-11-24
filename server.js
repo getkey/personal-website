@@ -38,14 +38,13 @@ app.use(router.get('/about', async ctx => {
 
 async function handleSavingError(err, ctx, next) {
 	switch (err.message) {
-		case 'Wrong password':
-			await ctx.render('wrong_password');
-			break;
 		case 'Article doesn\'t exist':
 			await next();
 			break;
 		default:
-			console.error(err);
+			await ctx.render('saving_error', {
+				err
+			});
 	}
 }
 app.use(router.get(['/', '/blog'], async ctx => {
@@ -93,8 +92,11 @@ app.use(router.get('/blog/:artclTmstp', async (ctx, id, next) => {
 
 	if (article === null) await next();
 	else await ctx.render('blog_render', {
-		articleTxt: article.html,
-		tags: article.tags, lang: article.lang
+		title: article.title,
+		date: article._id.getTimestamp(),
+		bodyCopy: article.html,
+		tags: article.tags,
+		lang: article.lang
 	});
 }));
 app.use(router.get('/blog/:artclTmstp/edit', async (ctx, id, next) => {

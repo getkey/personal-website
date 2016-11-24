@@ -1,22 +1,20 @@
 <% include header %>
 
-<% function logArrayElements(blogpost, index, postList) {
-	var firstPPosition = blogpost.html.indexOf('</p>') %>
-	<article lang="<%- blogpost.lang %>">
+<% for (let post of postList) {
+	let firstPPosition = post.html.indexOf('</p>'),
+		date = post._id.getTimestamp(); -%>
 
-	<% if(firstPPosition === -1) { %>
-		<%- blogpost.html %>
-	<% } else { %>
-		<%- blogpost.html.substr(0, firstPPosition + 4) %>
-	<% } %>
+	<article lang="<%- post.lang %>">
 
-	<a href="/blog/<%- blogpost._id.toString().substr(0, 8) %>">Read more</a></article>
+	<h1><a href="/blog/<%- post._id.toString().substr(0, 8) %>"><%- post.title %></a></h1>
+	<time datetime="<%- date.toISOString() %>" pubdate><%- date.toDateString() %></time>
+	<% if(firstPPosition === -1) { -%>
+		<%- post.html %>
+	<% } else { -%>
+		<%- post.html.substr(0, firstPPosition + 4) %>
+	<% } -%>
 
-	<% if(index !== postList.length - 1) { %>
-		<hr/>
-	<% } %>
-<% } %>
-
-<% postList.forEach(logArrayElements); %>
+	</article>
+<% } -%>
 
 <% include footer %>

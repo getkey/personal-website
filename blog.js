@@ -4,26 +4,13 @@ const mongoose = require('mongoose'),
 	fs = require('fs');
 
 mongoose.Promise = global.Promise;
-let renderer = new marked.Renderer();
-marked.setOptions({
-	renderer: renderer,
-	gfm: true,
-	tables: true,
-	breaks: true,
-	pedantic: false,
-	sanitize: true,
-	smartLists: true,
-	smartypants: true,
-	highlight: function (code) {
-		return require('highlight.js').highlightAuto(code).value;
-	}
-});
 
 mongoose.connect('mongodb://localhost/blog');
 mongoose.connection.on('error', console.error.bind(console, 'Mongoose: Connection error:'));
 
 
 let blogPostSchema = new mongoose.Schema({
+	title: String,
 	html: String,
 	md: String,
 	tags: [String],
@@ -31,15 +18,6 @@ let blogPostSchema = new mongoose.Schema({
 });
 
 let BlogPost = mongoose.model('BlogPost', blogPostSchema);
-
-function insertDate(html, date) {
-	let dayArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-		monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'December'],
-		addAt = html.indexOf('</h1>') + '</h1>'.length,
-		tmpDateStr = '\n<time datetime="' + date.toISOString() + '" pubdate>' + dayArray[date.getUTCDay()] + ' ' + date.getUTCDate() + ' ' + monthArray[date.getUTCMonth()] + ' ' + date.getUTCFullYear() + '</time>\n';
-
-	return html.substr(0, addAt) + tmpDateStr + html.substr(addAt);
-}
 
 function validPassword(password) {
 	if (password === undefined) return false;
@@ -93,7 +71,35 @@ module.exports.saveArticle = async (tags, password, post, lang, id) => {
 		article.md = post;
 		article.lang = lang;
 	}
-	article.html = insertDate(marked(post), article._id.getTimestamp());
+
+	let renderer = new marked.Renderer(),
+		title = null;
+
+	renderer.heading = function (text, level, raw) {
+		if (level === 1) {
+			if (title === null) title = text;
+			else throw new Error('Only one level 1 title allowed');
+
+			return '';
+		} else return marked.Renderer.prototype.heading.call(this, text, level, raw);
+	};
+
+	article.html = marked(post, {
+		gfm: true,
+		tables: true,
+		breaks: true,
+		pedantic: false,
+		sanitize: true,
+		smartLists: true,
+		smartypants: true,
+		highlight: (code) => {
+			return require('highlight.js').highlightAuto(code).value;
+		},
+		xhtml: true,
+		renderer
+	});
+	if (title === null) throw new Error('There must be one level 1 title');
+	article.title = title;
 
 	await article.save();
 
