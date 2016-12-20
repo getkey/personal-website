@@ -32,10 +32,10 @@ module.exports.getAllArticles = async () => {
 	return await BlogPost.find({}, null, {sort: {_id: -1}});
 };
 
-module.exports.getArticlesByTag = async (tag) => {
+module.exports.getArticlesByTag = async tag => {
 	return await BlogPost.find({tags: tag}, null, {sort: {_id: -1}});
 };
-module.exports.getArticleById = async (id) => {
+module.exports.getArticleById = async id => {
 	if (!validId(id)) return null;
 
 	let article = await BlogPost.findById({
@@ -105,3 +105,6 @@ module.exports.saveArticle = async (tags, password, post, lang, id) => {
 
 	return article._id.toString().slice(0, -16);
 };
+module.exports.formatTitle = function(title) {
+	return title.replace(/\s+/g, '-').toLowerCase();
+}

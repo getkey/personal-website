@@ -49,13 +49,15 @@ async function handleSavingError(err, ctx, next) {
 }
 app.use(router.get(['/', '/blog'], async ctx => {
 	await ctx.render('blog_index', {
-		postList: await blog.getAllArticles()
+		postList: await blog.getAllArticles(),
+		formatTitle: blog.formatTitle
 	});
 }));
 
 app.use(router.get('/blog/tag/:tag', async (ctx, tag) => {
 	await ctx.render('blog_index', {
-		postList: await blog.getArticlesByTag(tag)
+		postList: await blog.getArticlesByTag(tag),
+		formatTitle: blog.formatTitle
 	});
 }));
 
@@ -91,13 +93,7 @@ app.use(router.get('/blog/:artclTmstp', async (ctx, id, next) => {
 	let article = await blog.getArticleById(id);
 
 	if (article === null) await next();
-	else await ctx.render('blog_render', {
-		title: article.title,
-		date: article._id.getTimestamp(),
-		bodyCopy: article.html,
-		tags: article.tags,
-		lang: article.lang
-	});
+	else ctx.redirect('/blog/' + id + '/' + blog.formatTitle(article.title));
 }));
 app.use(router.get('/blog/:artclTmstp/edit', async (ctx, id, next) => {
 	let article = await blog.getArticleById(id);
@@ -109,7 +105,6 @@ app.use(router.get('/blog/:artclTmstp/edit', async (ctx, id, next) => {
 		tags: article.tags
 	});
 }));
-
 app.use(router.post('/blog/:artclTmstp/edit', async (ctx, reqId, next) => {
 	try {
 		let id = await blog.saveArticle(
@@ -124,6 +119,18 @@ app.use(router.post('/blog/:artclTmstp/edit', async (ctx, reqId, next) => {
 	} catch (err) {
 		await handleSavingError(err, ctx, next);
 	}
+}));
+app.use(router.get('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next) => {
+	let article = await blog.getArticleById(id);
+
+	if (article === null || blog.formatTitle(article.title) !== title) await next();
+	else await ctx.render('blog_render', {
+		title: article.title,
+		date: article._id.getTimestamp(),
+		bodyCopy: article.html,
+		tags: article.tags,
+		lang: article.lang
+	});
 }));
 
 

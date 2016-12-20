@@ -103,7 +103,6 @@ header {
 }
 header h1 {
 	margin: 0;
-	/* TODO: find another font */
 	letter-spacing: 0.2rem;
 }
 
@@ -140,6 +139,9 @@ article:last-child {
 article h1 {
 	margin-top: 0;
 }
+article img {
+	max-width: 100%;
+}
 
 pre, code {
 	background: #e2e0de;
@@ -147,4 +149,22 @@ pre, code {
 pre {
 	overflow-x: scroll;
 	padding: 0.3rem;
+}
+
+footer {
+	text-align: center;
+	font-family: "Open Sans";
+	font-weight: 300;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+footer p {
+	margin: 0;
+	padding: 0.2rem 1rem;
+	display: inline-block;
+	background-color: white;
+	border: solid 1px grey;
+	border-bottom: none;
 }

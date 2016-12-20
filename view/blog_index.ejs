@@ -6,7 +6,7 @@
 
 	<article lang="<%- post.lang %>">
 
-	<h1><a href="/blog/<%- post._id.toString().substr(0, 8) %>"><%- post.title %></a></h1>
+	<h1><a href="/blog/<%- post._id.toString().substr(0, 8) %>/<%- formatTitle(post.title) %>"><%- post.title %></a></h1>
 	<time datetime="<%- date.toISOString() %>" pubdate><%- date.toDateString() %></time>
 	<% if(firstPPosition === -1) { -%>
 		<%- post.html %>
