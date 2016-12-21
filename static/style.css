@@ -73,28 +73,37 @@ nav ul li a {
 	text-decoration: none;
 	padding: 1.1rem 1.1rem 1.05rem 1.1rem;
 }
-nav ul li a, header h1, nav form input {
+nav ul li a, header h1, nav div form input {
 	color: white;
 }
-nav ul li a, nav form input {
+nav ul li a, nav div form input {
 	font-size: 2rem;
 	font-family: "Open Sans";
 	font-weight: 300;
 }
-nav form {
+nav div {
 	margin-right: 1.1rem;
+	display: flex;
+}
+nav div > * {
+	margin: 0 0.5rem;
+}
+nav div a img {
+	height: 100%;
+}
+nav div form {
 	border-bottom: medium solid white;
 }
-nav form input {
+nav div form input {
 	max-width: 10ch;
 	background-color: transparent;
 	border: none;
 }
-nav form button {
+nav div form button {
 	background-color: transparent;
 	border: none;
 }
-nav form button img {
+nav div form button img {
 	width: 2rem;
 }
 
