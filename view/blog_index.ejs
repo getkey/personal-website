@@ -7,7 +7,7 @@
 	<article lang="<%- post.lang %>">
 
 	<h1><a href="/blog/<%- post._id.toString().substr(0, 8) %>/<%- formatTitle(post.title) %>"><%- post.title %></a></h1>
-	<time datetime="<%- date.toISOString() %>" pubdate><%- date.toDateString() %></time>
+	<time datetime="<%- date.toISOString() %>"><%- date.toDateString() %></time>
 	<% if(firstPPosition === -1) { -%>
 		<%- post.html %>
 	<% } else { -%>
@@ -17,4 +17,4 @@
 	</article>
 <% } -%>
 
-<% include footer %>
+<% include full_footer %>
