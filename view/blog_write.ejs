@@ -1,4 +1,4 @@
-<% include header %>
+<%- include('header') -%>
 
 <form method="post" action="<% if(id === null) { %>/blog/write<% } else { %><%= '/blog/' + id + '/edit/' %><% } %>">
 
@@ -19,4 +19,4 @@ value="<% if(typeof tags !== 'undefined') { -%>
 <input type="submit"/>
 </form>
 
-<% include full_footer %>
+<%- include('full_footer') -%>

@@ -1,4 +1,4 @@
-<% include header %>
+<%- include('header') -%>
 
 <article lang="<%- lang %>">
 <h1><%- title %></h1>
@@ -15,4 +15,4 @@
 <footer>
 	<p>I am a student looking for an internship. Send me <a href="/about#contact">a mail</a>!</p>
 </footer>
-<% include footer %>
+<%- include('footer', { title: title }) -%>

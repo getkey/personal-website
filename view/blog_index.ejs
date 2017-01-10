@@ -1,4 +1,4 @@
-<% include header %>
+<%- include('header') -%>
 
 <% for (let post of postList) {
 	let firstPPosition = post.html.indexOf('</p>'),
@@ -17,4 +17,4 @@
 	</article>
 <% } -%>
 
-<% include full_footer %>
+<%- include('full_footer') -%>

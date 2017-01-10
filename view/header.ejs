@@ -3,7 +3,9 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width"/>
-	<title>Getkey</title>
+	<title><%_ if(locals.title !== undefined) { _%>
+		<%= title %> - 
+		<%_ } %>Getkey</title>
 	<link rel="stylesheet" href="/style.css"/>
 	<link rel="stylesheet" href="/tomorrow.css"/>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,300%7CMerriweather"/>
@@ -13,9 +15,6 @@
 
 <body lang="en">
 
-<header>
-	<h1>Getkey's humble Website</h1>
-</header>
 <nav>
 	<ul>
 		<li><a href="/">Home</a></li>

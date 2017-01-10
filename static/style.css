@@ -42,17 +42,13 @@ p, li {
 	line-height: 1.725rem;
 }
 
-header, nav {
-	background-color: #34495e;
-}
 nav {
-	position: sticky;
-	top: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.4);
-	padding: 0 3% 0 3%;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+	padding: 0 2%;
+	background-color: #34495e;
 }
 nav ul {
 	display: flex;
@@ -73,26 +69,25 @@ nav ul li a {
 	text-decoration: none;
 	padding: 1.1rem 1.1rem 1.05rem 1.1rem;
 }
-nav ul li a, header h1, nav div form input {
-	color: white;
-}
 nav ul li a, nav div form input {
+	color: white;
 	font-size: 2rem;
 	font-family: "Open Sans";
 	font-weight: 300;
 }
 nav div {
-	margin-right: 1.1rem;
 	display: flex;
+	align-items: center;
 }
 nav div > * {
 	margin: 0 0.5rem;
 }
-nav div a img {
-	height: 100%;
+nav div a {
+	display: block;
+	width: 2.2rem;
 }
 nav div form {
-	border-bottom: medium solid white;
+	border-bottom: 0.15rem solid white;
 }
 nav div form input {
 	max-width: 10ch;
@@ -107,14 +102,6 @@ nav div form button img {
 	width: 2rem;
 }
 
-header {
-	padding: 1.2% 0 1.2% 0;
-}
-header h1 {
-	margin: 0;
-	letter-spacing: 0.2rem;
-}
-
 iframe, main form textarea {
 	width: 100%;
 }
@@ -127,12 +114,6 @@ main form .table .row {
 }
 main form .table .row .cell {
 	display: table-cell;
-}
-
-hr {
-	border: 0;
-	height: 1px;
-	background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.4), transparent);
 }
 
 article {
@@ -177,7 +158,7 @@ footer p {
 	border-bottom: none;
 	color: white;
 	background-color: #34495e;
-	box-shadow: 0 0 3px #303030;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
 }
 footer p a {
 	color: white;
