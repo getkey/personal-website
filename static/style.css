@@ -140,26 +140,3 @@ pre {
 	overflow-x: scroll;
 	padding: 0.3rem;
 }
-
-footer {
-	text-align: center;
-	font-family: "Open Sans";
-	font-weight: 300;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-footer p {
-	margin: 0;
-	padding: 0.2rem 1rem;
-	display: inline-block;
-	background-color: white;
-	border-bottom: none;
-	color: white;
-	background-color: #34495e;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
-}
-footer p a {
-	color: white;
-}
