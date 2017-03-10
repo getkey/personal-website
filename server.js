@@ -1,6 +1,5 @@
 const Koa = require('koa'),
 	router = require('koa-route'),
-	co = require('co'),
 	render = require('koa-ejs'),
 	blog = require('./blog.js'),
 
@@ -13,7 +12,6 @@ render(app, {
 	cache: false,
 	debug: true
 });
-app.context.render = co.wrap(app.context.render);
 
 app.use(require('koa-bodyparser')());
 

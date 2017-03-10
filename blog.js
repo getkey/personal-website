@@ -19,10 +19,10 @@ let blogPostSchema = new mongoose.Schema({
 
 let BlogPost = mongoose.model('BlogPost', blogPostSchema);
 
-function validPassword(password) {
+async function validPassword(password) {
 	if (password === undefined) return false;
 
-	return bcrypt.compareSync(password, fs.readFileSync('hash.txt', {encoding: 'utf-8'}));
+	return await bcrypt.compare(password, fs.readFileSync('hash.txt', 'utf-8'));
 }
 function validId(id) {
 	return /[\da-f]{8}/.test(id);
@@ -46,7 +46,7 @@ module.exports.getArticleById = async id => {
 	return article;
 };
 module.exports.saveArticle = async (tags, password, post, lang, id) => {
-	if (post === undefined || tags === undefined || lang === undefined || !validPassword(password)) throw new Error('Wrong password');
+	if (post === undefined || tags === undefined || lang === undefined || !await validPassword(password)) throw new Error('Wrong password');
 
 	tags = tags === '' ? null : tags.split(', ');
 
