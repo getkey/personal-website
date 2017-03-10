@@ -3,8 +3,6 @@
   "version": "0.0.0",
   "license": "Apache-2.0",
   "dependencies": {
-    "babel-plugin-transform-async-to-generator": "6.x",
-    "babel-register": "6.x",
     "bcrypt": "1.x",
     "koa": "2.x",
     "koa-bodyparser": "4.x",
