@@ -83,6 +83,7 @@ app.use(router.post('/blog/write', async (ctx, next) => {
 
 		ctx.redirect('/blog/' + id);
 	} catch (err) {
+		console.log(err);
 		await handleSavingError(err, ctx, next);
 	}
 }));
@@ -115,6 +116,7 @@ app.use(router.post('/blog/:artclTmstp/edit', async (ctx, reqId, next) => {
 
 		ctx.redirect('/blog/' + id);
 	} catch (err) {
+		console.log(err);
 		await handleSavingError(err, ctx, next);
 	}
 }));
@@ -125,7 +127,7 @@ app.use(router.get('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next)
 	else await ctx.render('blog_render', {
 		title: article.title,
 		date: article._id.getTimestamp(),
-		bodyCopy: article.html,
+		bodyCopy: article.cache.content,
 		tags: article.tags,
 		lang: article.lang
 	});

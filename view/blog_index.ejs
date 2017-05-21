@@ -1,20 +1,18 @@
 <%- include('header') -%>
 
 <% for (let post of postList) {
-	let firstPPosition = post.html.indexOf('</p>'),
-		date = post._id.getTimestamp(); -%>
+	let date = post._id.getTimestamp(); -%>
 
-	<article lang="<%- post.lang %>">
+	<a href="/blog/<%- post._id.toString().substr(0, 8) %>/<%- formatTitle(post.title) %>">
+		<article lang="<%- post.lang %>">
 
-	<h1><a href="/blog/<%- post._id.toString().substr(0, 8) %>/<%- formatTitle(post.title) %>"><%- post.title %></a></h1>
-	<time datetime="<%- date.toISOString() %>"><%- date.toDateString() %></time>
-	<% if(firstPPosition === -1) { -%>
-		<%- post.html %>
-	<% } else { -%>
-		<%- post.html.substr(0, firstPPosition + 4) %>
-	<% } -%>
+		<h1><%- post.title %></h1>
+		<time datetime="<%- date.toISOString() %>"><%- date.toDateString() %></time>
+		<%- post.cache.excerpt %>
+		<% console.log(post) %>
 
-	</article>
+		</article>
+	</a>
 <% } -%>
 
 <%- include('full_footer') -%>

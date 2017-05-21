@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
-	marked = require('marked'),
 	bcrypt = require('bcrypt'),
-	fs = require('fs');
+	fs = require('fs')
+	render = require('./render.js');
 
 mongoose.Promise = global.Promise;
 
@@ -11,10 +11,13 @@ mongoose.connection.on('error', console.error.bind(console, 'Mongoose: Connectio
 
 let blogPostSchema = new mongoose.Schema({
 	title: String,
-	html: String,
 	md: String,
 	tags: [String],
-	lang: String
+	lang: String,
+	cache: {
+		content: String,
+		excerpt: String,
+	}
 });
 
 let BlogPost = mongoose.model('BlogPost', blogPostSchema);
@@ -45,15 +48,15 @@ module.exports.getArticleById = async id => {
 
 	return article;
 };
-module.exports.saveArticle = async (tags, password, post, lang, id) => {
-	if (post === undefined || tags === undefined || lang === undefined || !await validPassword(password)) throw new Error('Wrong password');
+module.exports.saveArticle = async (tags, password, md, lang, id) => {
+	if (md === undefined || tags === undefined || lang === undefined || !await validPassword(password)) throw new Error('Wrong password');
 
 	tags = tags === '' ? null : tags.split(', ');
 
 	let article;
 	if (id === undefined) { // create a new article
 		article = new BlogPost({
-			md: post,
+			md,
 			tags,
 			lang
 		});
@@ -68,37 +71,13 @@ module.exports.saveArticle = async (tags, password, post, lang, id) => {
 		if (article === null) throw new Error('Article doesn\'t exist');
 
 		article.tags = tags;
-		article.md = post;
+		article.md = md;
 		article.lang = lang;
 	}
 
-	let renderer = new marked.Renderer(),
-		title = null;
-
-	renderer.heading = function (text, level, raw) {
-		if (level === 1) {
-			if (title === null) title = text;
-			else throw new Error('Only one level 1 title allowed');
-
-			return '';
-		} else return marked.Renderer.prototype.heading.call(this, text, level, raw);
-	};
-
-	article.html = marked(post, {
-		gfm: true,
-		tables: true,
-		breaks: true,
-		pedantic: false,
-		sanitize: true,
-		smartLists: true,
-		smartypants: true,
-		highlight: (code) => {
-			return require('highlight.js').highlightAuto(code).value;
-		},
-		xhtml: true,
-		renderer
-	});
-	if (title === null) throw new Error('There must be one level 1 title');
+	let { title, content } = render.renderArticle(md);
+	article.cache.content = content;
+	article.cache.excerpt = render.renderExcerpt(md);
 	article.title = title;
 
 	await article.save();
