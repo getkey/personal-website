@@ -75,9 +75,9 @@ module.exports.saveArticle = async (tags, password, md, lang, id) => {
 		article.lang = lang;
 	}
 
-	let { title, content } = render.renderArticle(md);
+	let { title, content, excerpt } = render(md);
 	article.cache.content = content;
-	article.cache.excerpt = render.renderExcerpt(md);
+	article.cache.excerpt = excerpt;
 	article.title = title;
 
 	await article.save();

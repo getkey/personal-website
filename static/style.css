@@ -116,6 +116,13 @@ main form .table .row .cell {
 	display: table-cell;
 }
 
+main > a {
+	color: inherit;
+	text-decoration: inherit;
+}
+main > a:hover {
+	color: #202426;
+}
 article {
 	margin: 6em 0;
 	padding: 1em;
