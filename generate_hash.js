@@ -15,6 +15,7 @@ process.stdin.on('data', function(char) {
 		case '\u0003'://^C
 			process.stdout.write('\n');
 			process.exit();
+			break;
 		case '\n':
 		case '\r':
 			process.stdout.write('\n');

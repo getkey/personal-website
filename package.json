@@ -13,8 +13,16 @@
     "highlight.js": "9.x",
     "mongoose": "4.x"
   },
+  "devDependencies": {
+    "eslint": "3.x",
+    "pre-commit": "1.x"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/getkey/personal-website.git"
-  }
+  },
+  "scripts": {
+    "lint-stage": "./lint_stage.sh"
+  },
+  "pre-commit": "lint-stage"
 }

@@ -19,5 +19,8 @@ rules:
   semi:
     - error
     - always
+  comma-dangle:
+    - error
+    - only-multiline
   no-trailing-spaces: "error"
   no-console: 0

@@ -12,7 +12,7 @@ var fs = require('fs'),
 
 server.listen(443);
 
-/*HTTP redirection*/
+/* HTTP redirection */
 var http = require('http');
 http.createServer(function (req, res) {
 	res.writeHead(301, { 'Location': 'https://' + req.headers['host'] + req.url });

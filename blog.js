@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
 	bcrypt = require('bcrypt'),
-	fs = require('fs')
+	fs = require('fs'),
 	render = require('./render.js');
 
 mongoose.Promise = global.Promise;
@@ -86,4 +86,4 @@ module.exports.saveArticle = async (tags, password, md, lang, id) => {
 };
 module.exports.formatTitle = function(title) {
 	return title.replace(/\s+/g, '-').toLowerCase();
-}
+};

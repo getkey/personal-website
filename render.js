@@ -27,7 +27,7 @@ module.exports = function(md) {
 		excerpt,
 		title
 	};
-}
+};
 
 function validate(tokens) {
 	if (tokens[0].type !== 'heading' || tokens[0].depth !== 1) throw new Error('The article needs to start with a level 1 title');
@@ -39,7 +39,7 @@ function validate(tokens) {
 	if (h1Amount !== 1) throw new Error('There must be exactly one level 1 title');
 }
 function extractTitle(tokens) {
-	token = tokens.shift();
+	let token = tokens.shift();
 	return marked.inlineLexer(token.text, tokens.links, markedOptions);
 }
 function parseContent(tokens) {
@@ -49,7 +49,7 @@ function parseExcerpt(tokens) {
 	let renderer = new marked.Renderer();
 	renderer.link = function(href, title, text) { // strip out links
 		return text;
-	}
+	};
 	let options = Object.assign({}, markedOptions, {
 		renderer
 	});
@@ -65,10 +65,9 @@ function parseExcerpt(tokens) {
 		return tokens.length;
 	}
 
-	let links = tokens.links;
-		sliceIndex = getSliceIndex(tokens);
-
-	slicedTokens = tokens.slice(0, sliceIndex);
+	let links = tokens.links,
+		sliceIndex = getSliceIndex(tokens),
+		slicedTokens = tokens.slice(0, sliceIndex);
 	slicedTokens.links = links;
 
 	return marked.parser(slicedTokens, options);
