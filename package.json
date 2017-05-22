@@ -22,7 +22,7 @@
     "url": "https://github.com/getkey/personal-website.git"
   },
   "scripts": {
-    "lint-stage": "./lint_stage.sh"
+    "lint-stage": "./utils/lint_stage.sh"
   },
   "pre-commit": "lint-stage"
 }
