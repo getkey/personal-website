@@ -7,8 +7,11 @@ switch (process.argv[2]) {
 	case 'start':
 		require('./subcommands/start.js')(args);
 		break;
-	case 'render':
-		require('./subcommands/render.js')(args);
+	case 'regenerate-cache':
+		require('./subcommands/regenerate_cache.js')(args);
+		break;
+	case 'set-password':
+		require('./subcommands/generate_hash.js')();
 		break;
 	default:
 		cli.panic('Unknown argument. Expected: server|render');
