@@ -4,28 +4,34 @@ This is my personal website.
 
 ## Setup
 
-Install [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.org/). Then `npm install` will take care of the others dependencies for you.
+Install [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.org/). Then `npm install` will take care of the others dependencies.
 
-## Run it! 
+## Starting it! 
 
-```
-$ node hook.js 3000
-```
-
-Then you can access it at `http://localhost:3000`.
-
-You can also generate config files for Nginx and systemd with:
-
-```
-$ generate_config.sh
+``` sh
+$ node index.js start 8080
 ```
 
-You will find them in `generated/`.
+It can then be accessed at [http://localhost:8080](http://localhost:8080).
+
+### Generating Nginx and systemd config files
+
+```sh
+$ utils/generate_config.sh
+```
+
+You will be able to find them in `./generated/`.
+
+### Regenerating the cache
+
+```sh
+$ node index.js render
+```
 
 ## How to post on the blog
 
 First, you will need a password.
-You can create one by running `node generate_hash.js`. You will be prompted for a password whose hash will be saved as `hash.txt`.
+You can create one by running `node utils/generate_hash.js`. You will be prompted for a password whose hash will be saved as `hash.txt`.
 
-Now, with your browser, you can go to `/blog/write` to make your first post, which will be saved with a timestamp (for example as `/blog/5592ba9f`).
-If you wish to edit your blog post, you can append `/edit` to its URL (with my example you'd end up with `/blog/5592ba9f/edit`).
+Now, with your browser, you can go to `/blog/write` to make your first post, which will be saved with a timestamp (for example as `/blog/5592ba9f/title-of-the-post`).
+If you wish to edit a blog post, you must replace its title with `/edit` and got there (with my example you would end up with `/blog/5592ba9f/edit`).
