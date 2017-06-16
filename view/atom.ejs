@@ -9,12 +9,12 @@
 
 	<% for(let post of postList) { -%>
 		<entry>
-			<title><%- post.md.match(/^# ?(.+)[\n\r]+/)[1] %></title>
+			<title><%- post.title %></title>
 			<link href="https://getkey.eu/blog/<%- post._id.toString().substr(0, 8) %>"/>
 			<id><%- post._id %></id>
 			<updated><%- post._id.getTimestamp().toISOString() %></updated>
 			<content type="html" xml:lang="<%- post.lang %>">
-				<%= post.html %>
+				<%= post.cache.excerpt %>
 			</content>
 			<author>
 				<name>Getkey</name>
