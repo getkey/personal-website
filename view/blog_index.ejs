@@ -6,8 +6,8 @@
 	<a href="/blog/<%- post._id.toString().substr(0, 8) %>/<%- formatTitle(post.title) %>">
 		<article lang="<%- post.lang %>">
 
-		<h1><%- post.title %></h1>
 		<time datetime="<%- date.toISOString() %>"><%- date.toDateString() %></time>
+		<h1><%- post.title %></h1>
 		<%- post.cache.excerpt %>
 
 		</article>

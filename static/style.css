@@ -2,6 +2,7 @@ body {
 	color: #3a4145;
 	font-family: Merriweather, serif;
 	margin: 0;
+	background-color: #fdfdfd; /* makes blogpost cards look better */
 }
 main {
 	max-width: 80ch;
@@ -119,13 +120,15 @@ main form .table .row .cell {
 main > a {
 	color: inherit;
 	text-decoration: inherit;
-}
-main > a:hover {
-	color: #202426;
+
+	box-shadow: 0 3px 2px -1px rgba(0,0,0,0.1),0 1px 5px rgba(0,0,0,0.15),0 1px 1px -3px rgba(0,0,0,0.2);
+	background-color: white;
+	border-radius: 1px;
+	display: block;
 }
 article {
 	margin: 6em 0;
-	padding: 1em;
+	padding: 1em 1.25em;
 }
 article:first-child {
 	margin-top: 3em;
@@ -146,4 +149,10 @@ pre, code {
 pre {
 	overflow-x: scroll;
 	padding: 0.3rem;
+}
+time {
+	font-variant: small-caps;
+	font-weight: 300;
+	display: block;
+	text-align: end;
 }
