@@ -8,13 +8,13 @@
     "koa-bodyparser": "4.x",
     "koa-ejs": "4.x",
     "koa-route": "3.x",
-    "koa-static": "3.x",
     "marked": "0.x",
     "highlight.js": "9.x",
     "mongoose": "4.x"
   },
   "devDependencies": {
     "eslint": "4.x",
+    "koa-static": "4.x",
     "pre-commit": "1.x"
   },
   "repository": {

@@ -2,3 +2,5 @@ version: '3'
 services:
   web:
     restart: always
+    environment:
+      - NODE_ENV=production
