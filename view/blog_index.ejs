@@ -1,13 +1,12 @@
 <%- include('header') -%>
 
-<% for (let post of postList) {
-	let date = post._id.getTimestamp(); -%>
+<% for (let post of postList) { -%>
 
-	<a href="/blog/<%- post._id.toString().substr(0, 8) %>/<%- formatTitle(post.title) %>">
+	<a href="/blog/<%- post.cache.id %>/<%- formatTitle(post.cache.title) %>">
 		<article lang="<%- post.lang %>">
 
-		<time datetime="<%- date.toISOString() %>"><%- date.toDateString() %></time>
-		<h1><%- post.title %></h1>
+		<time datetime="<%- post.date.toISOString() %>"><%- post.date.toDateString() %></time>
+		<h1><%- post.cache.title %></h1>
 		<%- post.cache.excerpt %>
 
 		</article>

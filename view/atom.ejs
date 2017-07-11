@@ -4,15 +4,15 @@
 	<subtitle>Interesting stuff, computer related or not</subtitle>
 	<link href="https://getkey.eu/blog/atom.xml" rel="self"/>
 	<% if (postList.length !== 0) { -%>
-		<updated><%- postList[0]._id.getTimestamp().toISOString() %></updated>
+		<updated><%- postList[0].date.toISOString() %></updated>
 	<% } -%>
 
 	<% for(let post of postList) { -%>
 		<entry>
-			<title><%- post.title %></title>
-			<link href="https://getkey.eu/blog/<%- post._id.toString().substr(0, 8) %>"/>
-			<id><%- post._id %></id>
-			<updated><%- post._id.getTimestamp().toISOString() %></updated>
+			<title><%- post.cache.title %></title>
+			<link href="https://getkey.eu/blog/<%- post.cache.id %>"/>
+			<id><%- post.cache.id %></id>
+			<updated><%- post.date.toISOString() %></updated>
 			<content type="html" xml:lang="<%- post.lang %>">
 				<%= post.cache.excerpt %>
 			</content>
