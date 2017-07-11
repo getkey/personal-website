@@ -21,6 +21,6 @@ rules:
     - always
   comma-dangle:
     - error
-    - only-multiline
+    - always-multiline
   no-trailing-spaces: "error"
   no-console: 0

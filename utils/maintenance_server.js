@@ -6,7 +6,7 @@ function app(req, res) {
 var fs = require('fs'),
 	options = {
 		key: fs.readFileSync(__dirname + '/tls/getkey.eu.key'),
-		cert: fs.readFileSync(__dirname + '/tls/getkey.eu.chained.crt')
+		cert: fs.readFileSync(__dirname + '/tls/getkey.eu.chained.crt'),
 	},
 	server = require('https').createServer(options, app);
 
