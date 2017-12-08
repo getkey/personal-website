@@ -1,18 +1,16 @@
 const cli = require('./lib/cli.js');
 
-if (process.argv.length < 3) cli.panic('Argument expected: server|render');
+const subcommandPaths = {
+	start: './subcommands/start.js',
+	'regenerate-cache': './subcommands/regenerate_cache.js',
+	'set-password': './subcommands/generate_hash.js',
+};
+const panicString = `Argument expected: ${Object.keys(subcommandPaths).join('|')}`;
+
+if (process.argv.length < 3) cli.panic(panicString);
+
+const subcommand = subcommandPaths[process.argv[2]];
+if (subcommand === undefined) cli.panic(panicString);
 
 const args = process.argv.slice(3);
-switch (process.argv[2]) {
-	case 'start':
-		require('./subcommands/start.js')(args);
-		break;
-	case 'regenerate-cache':
-		require('./subcommands/regenerate_cache.js')(args);
-		break;
-	case 'set-password':
-		require('./subcommands/generate_hash.js')();
-		break;
-	default:
-		cli.panic('Unknown argument. Expected: server|render');
-}
+require(subcommand)(args);
