@@ -2,6 +2,7 @@
   "name": "getkey-s-personal-website",
   "version": "0.0.0",
   "license": "Apache-2.0",
+  "main": "./src/index.js",
   "dependencies": {
     "bcrypt": "1.x",
     "highlight.js": "9.x",
@@ -22,7 +23,7 @@
     "url": "https://github.com/getkey/personal-website.git"
   },
   "scripts": {
-    "start": "node index start 8080",
+    "start": "node ./src/index.js start 8080",
     "lint-stage": "./utils/lint_stage.sh"
   },
   "pre-commit": "lint-stage"
