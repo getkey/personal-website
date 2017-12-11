@@ -9,4 +9,4 @@ RUN apk --no-cache add --virtual builds-deps build-base python && npm install &&
 COPY . /usr/src/personal-website
 
 EXPOSE 8080
-CMD ["node", "index.js", "start", "8080"]
+CMD ["node", "./src/index.js", "start", "8080"]

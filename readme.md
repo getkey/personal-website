@@ -9,7 +9,7 @@ Install [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.org/). 
 ## Starting it! 
 
 ``` sh
-$ node index.js start 8080
+$ node ./src/index.js start 8080
 ```
 
 It can then be accessed at [http://localhost:8080](http://localhost:8080).
@@ -25,7 +25,7 @@ You will be able to find them in `./generated/`.
 ### Regenerating the cache
 
 ```sh
-$ node index.js regenerate-cache
+$ node ./src/index.js regenerate-cache
 ```
 
 ### Set a password
@@ -33,7 +33,7 @@ $ node index.js regenerate-cache
 This password is needed to post or edit blogposts.
 
 ```sh
-$ node index.js set-password
+$ node ./src/index.js set-password
 ```
 
 The hash will be saved as `hash.txt`.
