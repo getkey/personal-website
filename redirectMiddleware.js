@@ -5,8 +5,8 @@ module.exports = async (ctx, next) => {
 
 	if (redirection !== undefined) {
 		ctx.status = 301;
-		ctx.redirect(redirection);
 		ctx.body = `Redirecting to ${redirection}`;
+		ctx.redirect(redirection);
 	} else {
 		await next();
 	}
