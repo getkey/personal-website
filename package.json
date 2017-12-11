@@ -22,6 +22,7 @@
     "url": "https://github.com/getkey/personal-website.git"
   },
   "scripts": {
+    "start": "node index start 8080",
     "lint-stage": "./utils/lint_stage.sh"
   },
   "pre-commit": "lint-stage"
