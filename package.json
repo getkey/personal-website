@@ -10,7 +10,7 @@
     "koa-bodyparser": "4.x",
     "koa-ejs": "4.x",
     "koa-route": "3.x",
-    "marked": "0.x",
+    "marked": "^0.3.7",
     "mongoose": "4.x"
   },
   "devDependencies": {

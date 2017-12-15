@@ -47,6 +47,5 @@ If you wish to edit a blog post, you must replace its title with `/edit` and got
 
 ## TODO
 
-* Test the static redirects with a backup of the blog.
 * Add more branding. There is none at the moment.
 * Fix the search tool.
