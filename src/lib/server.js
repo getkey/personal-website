@@ -89,7 +89,7 @@ app.use(router.post('/blog/write', async (ctx, next) => {
 
 		ctx.redirect(`/blog/${article.cache.id}/${blog.formatTitle(article.cache.title)}`);
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		await handleSavingError(err, ctx, next);
 	}
 }));
@@ -143,7 +143,7 @@ app.use(router.post('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next
 
 		ctx.redirect(`/blog/${article.cache.id}/${blog.formatTitle(article.cache.title)}`);
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		await handleSavingError(err, ctx, next);
 	}
 }));
