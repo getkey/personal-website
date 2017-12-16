@@ -43,7 +43,7 @@ The hash will be saved as `hash.txt`.
 Make sure you have [set a password](#set-a-password).
 
 Now, with your browser, you can go to `/blog/write` to make your first post, which will be saved with a timestamp (for example as `/blog/5592ba9f/title-of-the-post`).
-If you wish to edit a blog post, you must replace its title with `/edit` and got there (with my example you would end up with `/blog/5592ba9f/edit`).
+If you wish to edit a blog post, you must append its URL with `?edit` (with my example you would end up with `/blog/5592ba9f/title-of-the-post?edit`).
 
 ## TODO
 

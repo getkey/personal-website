@@ -1,6 +1,6 @@
 <%- include('header') -%>
 
-<form method="post" action="<% if(id === null) { %>/blog/write<% } else { %><%= '/blog/' + id + '/edit/' %><% } %>">
+<form method="post" action="<%- dest %>">
 
 <textarea name="post" rows="32" placeholder="Write a new blog post here. GFM allowed!"><% if(typeof placeholder !== 'undefined') { %><%- placeholder %><% } %></textarea>
 
