@@ -1,14 +1,14 @@
-/node_modules
+/node_modules/
+/yarn-error.log
 
-# certificates and such
-/tls
+# hash that allows posting
 /hash.txt
 
 # generated config files for Nginx and systemd
-/generated
+/generated/
 
-# stuff I put on the serevr to send/share with my friends
-/shared
+# stuff I put on the server to send/share with my friends
+/shared/
 
 # resources included in blog posts
-/static/blog
+/static/
