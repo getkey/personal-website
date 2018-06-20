@@ -2,10 +2,11 @@ const mongoose = require('mongoose'),
 	auth = require('./auth.js'),
 	render = require('./render.js');
 
-mongoose.Promise = global.Promise;
-
-mongoose.connect(process.env.DB_URL !== undefined ? process.env.DB_URL : 'mongodb://localhost/blog');
-mongoose.connection.on('error', console.error.bind(console, 'Mongoose: Connection error:'));
+const dbUrl = process.env.DB_URL !== undefined ? process.env.DB_URL : 'mongodb://localhost/blog';
+mongoose.connect(dbUrl).catch((...err) => {
+	console.error('Mongoose: Connection error:', ...err);
+	process.exit(1);
+});
 
 
 let blogPostSchema = new mongoose.Schema({
