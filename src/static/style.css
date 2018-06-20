@@ -159,3 +159,15 @@ time {
 	display: block;
 	text-align: end;
 }
+
+.small-text {
+	font-size: 0.6em;
+}
+
+ins::before {
+	content: attr(datetime) ' edit: ';
+}
+ins {
+	text-decoration: none;
+	background-color: rgba(0, 255, 6, 0.08);
+}
