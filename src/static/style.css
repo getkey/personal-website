@@ -164,10 +164,21 @@ time {
 	font-size: 0.6em;
 }
 
-ins::before {
-	content: attr(datetime) ' edit: ';
+details > summary {
+	font-family: "Open Sans", sans-serif;
+	cursor: pointer;
+	user-select: none;
 }
-ins {
+
+details + p > ins, details + ins {
 	text-decoration: none;
-	background-color: rgba(0, 255, 6, 0.08);
+}
+
+details > p > del {
+	text-decoration: none;
+}
+
+details > :not(summary) {
+	display: block;
+	margin-left: 3rem;
 }
