@@ -2,7 +2,8 @@ const Koa = require('koa'),
 	router = require('koa-route'),
 	render = require('koa-ejs'),
 	blog = require('./blog.js'),
-	app = new Koa();
+	app = new Koa(),
+	baseUrl = 'https://getkey.eu';
 
 render(app, {
 	root: __dirname + '/../view',
@@ -29,7 +30,9 @@ app.use(router.get('/search', async ctx => {
 }));
 
 app.use(router.get('/about', async ctx => {
-	await ctx.render('about');
+	await ctx.render('about', {
+		canonical: `${baseUrl}/about`,
+	});
 }));
 
 
@@ -55,6 +58,7 @@ app.use(router.get('/blog', async ctx => {
 	await ctx.render('blog_index', {
 		postList: await blog.getArticles(),
 		formatTitle: blog.formatTitle,
+		canonical: `${baseUrl}/blog`,
 	});
 }));
 
@@ -62,6 +66,7 @@ app.use(router.get('/blog/tag/:tag', async (ctx, tag) => {
 	await ctx.render('blog_index', {
 		postList: await blog.getArticles(tag),
 		formatTitle: blog.formatTitle,
+		canonical: `${baseUrl}/blog/tag/${tag}`,
 	});
 }));
 
@@ -94,16 +99,16 @@ app.use(router.post('/blog/write', async (ctx, next) => {
 	}
 }));
 
-app.use(router.get('/blog/:artclTmstp', async (ctx, id, next) => {
-	let article = await blog.getArticleById(id);
+app.use(router.get('/blog/:articleId', async (ctx, articleId, next) => {
+	let article = await blog.getArticleById(articleId);
 
 	if (article === null) await next();
-	else ctx.redirect('/blog/' + id + '/' + blog.formatTitle(article.cache.title));
+	else ctx.redirect('/blog/' + articleId + '/' + blog.formatTitle(article.cache.title));
 }));
-app.use(router.get('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next) => {
-	let article = await blog.getArticleById(id);
+app.use(router.get('/blog/:articleId/:articleTitle', async (ctx, articleId, articleTitle, next) => {
+	let article = await blog.getArticleById(articleId);
 
-	if (article === null || blog.formatTitle(article.cache.title) !== title) await next();
+	if (article === null || blog.formatTitle(article.cache.title) !== articleTitle) await next();
 	else if (ctx.request.query.edit !== undefined) {
 		await ctx.render('blog_write', {
 			dest: ctx.request.path + ctx.request.search, // post to same path
@@ -117,10 +122,11 @@ app.use(router.get('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next)
 			bodyCopy: article.cache.content,
 			tags: article.tags,
 			lang: article.lang,
+			canonical: `${baseUrl}/${articleId}/${articleTitle}`,
 		});
 	}
 }));
-app.use(router.post('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next) => {
+app.use(router.post('/blog/:articleId/:articleTitle', async (ctx, articleId, articleTitle, next) => {
 	// note: any title is accepted as the destination as long as the id matches.
 	// The id is unique, but the title may have been modified so it can't be checked.
 	if (ctx.request.query.edit === undefined) {
@@ -138,7 +144,7 @@ app.use(router.post('/blog/:artclTmstp/:artclTitle', async (ctx, id, title, next
 			ctx.request.body.password,
 			ctx.request.body.post,
 			ctx.request.body.lang,
-			id,
+			articleId,
 		);
 
 		ctx.redirect(`/blog/${article.cache.id}/${blog.formatTitle(article.cache.title)}`);

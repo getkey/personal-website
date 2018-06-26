@@ -1,4 +1,4 @@
-<%- include('header') -%>
+<%- include('header', { canonical }); -%>
 
 <% for (let post of postList) { -%>
 
@@ -13,4 +13,4 @@
 	</a>
 <% } -%>
 
-<%- include('full_footer') -%>
+<%- include('full_footer'); -%>

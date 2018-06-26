@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width"/>
-	<title><%_ if(locals.title !== undefined) { _%>
+	<title><%_ if (locals.title !== undefined) { _%>
 		<%= title %> - 
 		<%_ } %>Getkey</title>
 	<link rel="stylesheet" href="/style.css"/>
@@ -11,6 +11,9 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,300%7CMerriweather:300,400"/>
 	<link rel="icon" type="image/png" href="/favicon.png"/>
 	<link href="/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Blog post feed" />
+	<%_ if (locals.canonical) { _%>
+		<link rel="canonical" href="<%- canonical %>"/>
+	<%_ } _%>
 </head>
 
 <body lang="en">

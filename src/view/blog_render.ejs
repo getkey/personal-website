@@ -1,4 +1,4 @@
-<%- include('header') -%>
+<%- include('header', { canonical }); -%>
 
 <article lang="<%- lang %>">
 <time datetime="<%- date.toISOString() %>"><%- date.toDateString() %></time>
@@ -13,4 +13,4 @@
 
 </main>
 
-<%- include('footer', { title: title }) -%>
+<%- include('footer', { title: title }); -%>
