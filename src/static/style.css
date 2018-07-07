@@ -168,6 +168,7 @@ details > summary {
 	font-family: "Open Sans", sans-serif;
 	cursor: pointer;
 	user-select: none;
+	color: #ec9200;
 }
 
 details + p > ins, details + ins {
