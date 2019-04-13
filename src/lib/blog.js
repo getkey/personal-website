@@ -3,11 +3,16 @@ const mongoose = require('mongoose'),
 	render = require('./render.js');
 
 const dbUrl = process.env.DB_URL !== undefined ? process.env.DB_URL : 'mongodb://localhost/blog';
-mongoose.connect(dbUrl).catch((...err) => {
-	console.error('Mongoose: Connection error:', ...err);
-	process.exit(1);
-});
 
+function connectDb() {
+	mongoose.connect(dbUrl).catch((...err) => {
+		const delay = 2000;
+		console.error('Mongoose: Connection error:', ...err);
+		console.error('Retrying in ' + delay/1000 + 'sec.');
+		setTimeout(connectDb, delay);
+	});
+}
+connectDb();
 
 let blogPostSchema = new mongoose.Schema({
 	md: String,

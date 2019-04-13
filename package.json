@@ -4,17 +4,17 @@
   "license": "Apache-2.0",
   "main": "./src/index.js",
   "dependencies": {
-    "bcrypt": "3.0.2",
-    "highlight.js": "9.13.1",
-    "koa": "2.6.2",
+    "bcrypt": "3.0.5",
+    "highlight.js": "9.15.6",
+    "koa": "2.7.0",
     "koa-bodyparser": "4.2.1",
-    "koa-ejs": "4.1.2",
+    "koa-ejs": "4.2.0",
     "koa-route": "3.x",
-    "marked": "^0.5.2",
-    "mongoose": "5.3.14"
+    "marked": "^0.6.2",
+    "mongoose": "5.5.1"
   },
   "devDependencies": {
-    "eslint": "5.9.0",
+    "eslint": "5.16.0",
     "koa-static": "5.0.0",
     "pre-commit": "1.x"
   },
