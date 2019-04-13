@@ -1,12 +1,22 @@
+FROM node:alpine as builder
+
+WORKDIR /code
+
+COPY package.json .
+COPY yarn.lock .
+RUN apk --no-cache add --virtual builds-deps build-base python
+RUN yarn install
+
+COPY src src
+
+
 FROM node:alpine
 
-RUN mkdir -p /usr/src/personal-website
 WORKDIR /usr/src/personal-website
 
-COPY package.json /usr/src/personal-website
-RUN apk --no-cache add --virtual builds-deps build-base python && npm install && apk del builds-deps
-
-COPY . /usr/src/personal-website
+COPY --from=builder /code/package.json .
+COPY --from=builder /code/src src
+COPY --from=builder /code/node_modules node_modules
 
 EXPOSE 8080
 CMD ["node", "./src/index.js", "start", "8080"]

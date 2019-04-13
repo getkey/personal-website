@@ -14,7 +14,8 @@ module.exports.generateHash = password => {
 	return bcrypt.hashSync(password, salt);
 };
 module.exports.valid = async password => {
-	return await bcrypt.compare(password, fs.readFileSync(HASH_FILE_PATH, 'utf-8'));
+	const hash = fs.readFileSync(HASH_FILE_PATH, 'utf-8');
+	return await bcrypt.compare(password, hash);
 };
 module.exports.save = hash => {
 	fs.writeFileSync(HASH_FILE_PATH, hash);

@@ -6,10 +6,13 @@
 <%- bodyCopy %>
 </article>
 
-<% if(tags !== null) { -%>
-<div>Tags:<% tags.forEach(function(tag) { -%>
- <a href="/blog/tag/<%- tag %>"><%- tag %></a><% }); %></div>
-<% } -%>
+<% if(tags !== null) { _%>
+	<nav id="tags">
+		<% tags.forEach(function(tag) { -%>
+			<a href="/blog/tag/<%- tag %>"><%- tag %></a>
+		<% }); -%>
+	</nav>
+<%_ } -%>
 
 </main>
 

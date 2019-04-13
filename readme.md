@@ -49,3 +49,4 @@ If you wish to edit a blog post, you must append its URL with `?edit` (with my e
 
 * Add more branding. There is none at the moment.
 * Fix the search tool.
+* Migrate to PostgreSQL (or make the site static?)
