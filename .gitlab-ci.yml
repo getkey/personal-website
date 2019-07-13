@@ -1,0 +1,35 @@
+image: node:lts
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - deps
+  - build
+  - deploy
+
+
+deps:
+  stage: deps
+  script: yarn install
+
+build:
+  stage: build
+  script:
+    - yarn build
+  variables:
+    NODE_ENV: production
+  artifacts:
+    paths:
+      - public
+
+pages:
+  stage: deploy
+  script:
+    - find public -type f -iregex '.*\.\(html\|js\|css\|svg\|webmanifest\|fnt\)$' -execdir gzip -f --keep {} \;
+  artifacts:
+    paths:
+      - public
+  only:
+    - static
