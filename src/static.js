@@ -4,14 +4,14 @@ const util = require('util');
 const ejs = require('ejs');
 
 const render = require('./lib/render.js');
-const { formatTitle } = require('./lib/url.js');
+const { formatTitle, idFromDate } = require('./lib/url.js');
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
 
 const articlesDir = path.join(__dirname, '..', 'articles');
-const outDir = path.join(__dirname, '..', 'public');
+const outDir = path.join(__dirname, '..', 'public', 'blog');
 
 fs.readdirSync(articlesDir)
 	.filter(filename => filename.endsWith('.md'))
@@ -29,8 +29,8 @@ fs.readdirSync(articlesDir)
 	})
 	.forEach(promise => promise.then(([md, { tags, lang, date }]) => {
 		const { content, excerpt, title } = render(md);
-		const formatedTitle = formatTitle(title);
-		const articleDir = path.join(outDir, formatedTitle);
+		const id = idFromDate(date);
+		const articleDir = path.join(outDir, id);
 
 		return Promise.all([
 			ejs.renderFile(path.join(__dirname, 'view', 'blog_render.ejs'), {
@@ -41,11 +41,15 @@ fs.readdirSync(articlesDir)
 				lang,
 				canonical: 'whatever',
 			}),
-			mkdir(articleDir),
+			mkdir(articleDir, { recursive: true }),
 		]).then(([html]) => ({
 			articleDir,
+			title,
 			html,
 			excerpt,
 		}));
-	}).then(({ articleDir, html }) => writeFile(path.join(articleDir, 'index.html'), html)));
+	}).then(({ articleDir, html, title }) => {
+		const formatedTitle = formatTitle(title);
+		return writeFile(path.join(articleDir, `${formatedTitle}.html`), html);
+	}));
 // TODO: something with the excerpt
