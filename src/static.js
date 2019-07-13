@@ -15,8 +15,19 @@ const outDir = path.join(__dirname, '..', 'public');
 
 fs.readdirSync(articlesDir)
 	.filter(filename => filename.endsWith('.md'))
-	.map(filename => readFile(path.join(articlesDir, filename), 'utf8'))
-	.forEach(readPromise => readPromise.then(md => {
+	.map(filename => {
+		const base = filename.replace(/\.md$/, '');
+
+		return Promise.all([
+			readFile(path.join(articlesDir, `${base}.md`), 'utf8'),
+			readFile(path.join(articlesDir, `${base}.json`), 'utf8').then(metadataStr => {
+				const metadata = JSON.parse(metadataStr);
+				metadata.date = new Date(metadata.date);
+				return metadata;
+			}),
+		]);
+	})
+	.forEach(promise => promise.then(([md, { tags, lang, date }]) => {
 		const { content, excerpt, title } = render(md);
 		const formatedTitle = formatTitle(title);
 		const articleDir = path.join(outDir, formatedTitle);
@@ -24,10 +35,10 @@ fs.readdirSync(articlesDir)
 		return Promise.all([
 			ejs.renderFile(path.join(__dirname, 'view', 'blog_render.ejs'), {
 				title,
-				date: new Date(),
+				date,
 				bodyCopy: content,
-				tags: [],
-				lang: 'en',
+				tags,
+				lang,
 				canonical: 'whatever',
 			}),
 			mkdir(articleDir),
