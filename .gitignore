@@ -12,3 +12,5 @@
 
 # resources included in blog posts
 /static/
+
+/public/*/*

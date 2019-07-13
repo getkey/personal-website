@@ -114,9 +114,3 @@ module.exports.regenerateCache = async () => {
 		console.log('saved:', article.cache.title);
 	}
 };
-module.exports.formatTitle = title => {
-	return title
-		.replace(/[^a-zA-Z\d\s’']/, '')
-		.replace(/[\s’']+/g, '-')
-		.toLowerCase();
-};
