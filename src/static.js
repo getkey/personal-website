@@ -14,7 +14,7 @@ const mkdir = util.promisify(fs.mkdir);
 const articlesDir = path.join(__dirname, '..', 'articles');
 const outDir = path.join(__dirname, '..', 'public', 'blog');
 
-fs.readdirSync(articlesDir)
+const articles = fs.readdirSync(articlesDir)
 	.map(dirName => {
 		return Promise.all([
 			readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
@@ -25,30 +25,39 @@ fs.readdirSync(articlesDir)
 			}),
 		]);
 	})
-	.forEach(promise => promise.then(([md, { tags, lang, date }]) => {
+	.map(promise => promise.then(([md, { tags, lang, date }]) => {
 		const { content, excerpt, title } = render(md);
-		const id = idFromDate(date);
-		const articleDir = path.join(outDir, id);
-		const formatedTitle = formatTitle(title);
-
-		return Promise.all([
-			ejs.renderFile(path.join(__dirname, 'view', 'blog_render.ejs'), {
-				title,
-				date,
-				bodyCopy: content,
-				tags,
-				lang,
-				canonical: `${baseUrl}/blog/${id}/${formatedTitle}`,
-			}),
-			mkdir(articleDir, { recursive: true }),
-		]).then(([html]) => ({
-			articleDir,
-			formatedTitle,
-			html,
+		return {
+			content,
 			excerpt,
-		}));
-	}).then(({ articleDir, html, formatedTitle }) => writeFile(
+			title,
+			id: idFromDate(date),
+			tags,
+			lang,
+			date,
+			formatedTitle: formatTitle(title),
+		};
+	}));
+
+articles.forEach(async promise => {
+	const { content, title, date, tags, lang, id, formatedTitle } = await promise;
+	const articleDir = path.join(outDir, id);
+
+	const [html] = await Promise.all([
+		ejs.renderFile(path.join(__dirname, 'view', 'blog_render.ejs'), {
+			title,
+			date,
+			bodyCopy: content,
+			tags,
+			lang,
+			canonical: `${baseUrl}/blog/${id}/${formatedTitle}`,
+		}),
+		mkdir(articleDir, { recursive: true }),
+	]);
+
+	writeFile(
 		path.join(articleDir, `${formatedTitle}.html`),
 		html,
-	)));
+	);
+});
 // TODO: something with the excerpt
