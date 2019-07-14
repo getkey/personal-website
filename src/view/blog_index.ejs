@@ -2,12 +2,12 @@
 
 <% for (let post of postList) { -%>
 
-	<a href="/blog/<%- post.cache.id %>/<%- formatTitle(post.cache.title) %>">
+	<a href="/blog/<%- post.id %>/<%- post.formatedTitle %>">
 		<article lang="<%- post.lang %>">
 
 		<time datetime="<%- post.date.toISOString() %>"><%- post.date.toDateString() %></time>
-		<h1><%- post.cache.title %></h1>
-		<%- post.cache.excerpt %>
+		<h1><%- post.title %></h1>
+		<%- post.excerpt %>
 
 		</article>
 	</a>

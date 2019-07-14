@@ -60,4 +60,18 @@ articles.forEach(async promise => {
 		html,
 	);
 });
-// TODO: something with the excerpt
+
+Promise.all(articles).then(async articles => {
+	const [html] = await Promise.all([
+		ejs.renderFile(path.join(__dirname, 'view', 'blog_index.ejs'), {
+			postList: articles,
+			canonical: `${baseUrl}/blog`,
+		}),
+		mkdir(outDir, { recursive: true }),
+	]);
+
+	writeFile(
+		path.join(outDir, 'index.html'),
+		html,
+	);
+});
