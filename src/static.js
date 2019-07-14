@@ -12,19 +12,18 @@ const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
 
 const articlesDir = path.join(__dirname, '..', 'articles');
-const outDir = path.join(__dirname, '..', 'public', 'blog');
+const baseDir = path.join(__dirname, '..', 'public');
+const blogDir = path.join(baseDir, 'blog');
 
 const articles = fs.readdirSync(articlesDir)
-	.map(dirName => {
-		return Promise.all([
-			readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
-			readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then(metadataStr => {
-				const metadata = JSON.parse(metadataStr);
-				metadata.date = new Date(metadata.date);
-				return metadata;
-			}),
-		]);
-	})
+	.map(dirName => Promise.all([
+		readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
+		readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then(metadataStr => {
+			const metadata = JSON.parse(metadataStr);
+			metadata.date = new Date(metadata.date);
+			return metadata;
+		}),
+	]))
 	.map(promise => promise.then(([md, { tags, lang, date }]) => {
 		const { content, excerpt, title } = render(md);
 		return {
@@ -39,9 +38,10 @@ const articles = fs.readdirSync(articlesDir)
 		};
 	}));
 
+// blog articles
 articles.forEach(async promise => {
 	const { content, title, date, tags, lang, id, formatedTitle } = await promise;
-	const articleDir = path.join(outDir, id);
+	const articleDir = path.join(blogDir, id);
 
 	const [html] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'view', 'blog_render.ejs'), {
@@ -61,17 +61,43 @@ articles.forEach(async promise => {
 	);
 });
 
+const mkBlogDir = mkdir(blogDir, { recursive: true });
+
+// blog index
 Promise.all(articles).then(async articles => {
 	const [html] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'view', 'blog_index.ejs'), {
 			postList: articles,
 			canonical: `${baseUrl}/blog`,
 		}),
-		mkdir(outDir, { recursive: true }),
+		mkBlogDir,
 	]);
 
 	writeFile(
-		path.join(outDir, 'index.html'),
+		path.join(blogDir, 'index.html'),
 		html,
 	);
 });
+
+// RSS feed
+Promise.all(articles).then(async articles => {
+	const [xml] = await Promise.all([
+		ejs.renderFile(path.join(__dirname, 'view', 'atom.ejs'), {
+			postList: articles,
+		}),
+		mkBlogDir,
+	]);
+
+	writeFile(
+		path.join(blogDir, 'atom.xml'),
+		xml,
+	);
+});
+
+// about
+ejs.renderFile(path.join(__dirname, 'view', 'about.ejs'), {
+	canonical: `${baseUrl}/about`,
+}).then(html => writeFile(
+	path.join(baseDir, 'about.html'),
+	html,
+));

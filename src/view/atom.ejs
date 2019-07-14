@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<title>Getkey's blog</title>
+	<title>Julien Mourer's blog</title>
 	<subtitle>Interesting stuff, computer related or not</subtitle>
 	<link href="https://getkey.eu/blog/atom.xml" rel="self"/>
 	<% if (postList.length !== 0) { -%>
@@ -9,15 +9,15 @@
 
 	<% for(let post of postList) { -%>
 		<entry>
-			<title><%- post.cache.title %></title>
-			<link href="https://getkey.eu/blog/<%- post.cache.id %>"/>
-			<id><%- post.cache.id %></id>
+			<title><%- post.title %></title>
+			<link href="https://getkey.eu/blog/<%- post.id %>"/>
+			<id><%- post.id %></id>
 			<updated><%- post.date.toISOString() %></updated>
 			<content type="html" xml:lang="<%- post.lang %>">
-				<%= post.cache.excerpt %>
+				<%= post.excerpt %>
 			</content>
 			<author>
-				<name>Getkey</name>
+				<name>Julien Mourer</name>
 				<email>getkey@getkey.eu</email>
 			</author>
 		</entry>
