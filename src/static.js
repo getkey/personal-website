@@ -14,13 +14,10 @@ const articlesDir = path.join(__dirname, '..', 'articles');
 const outDir = path.join(__dirname, '..', 'public', 'blog');
 
 fs.readdirSync(articlesDir)
-	.filter(filename => filename.endsWith('.md'))
-	.map(filename => {
-		const base = filename.replace(/\.md$/, '');
-
+	.map(dirName => {
 		return Promise.all([
-			readFile(path.join(articlesDir, `${base}.md`), 'utf8'),
-			readFile(path.join(articlesDir, `${base}.json`), 'utf8').then(metadataStr => {
+			readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
+			readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then(metadataStr => {
 				const metadata = JSON.parse(metadataStr);
 				metadata.date = new Date(metadata.date);
 				return metadata;
