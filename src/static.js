@@ -61,10 +61,13 @@ articles.forEach(async promise => {
 	);
 });
 
+const sortedArticles = Promise.all(articles).then(articles => ([
+	...articles,
+].sort((a, b) => b.date - a.date)));
 const mkBlogDir = mkdir(blogDir, { recursive: true });
 
 // blog index
-Promise.all(articles).then(async articles => {
+sortedArticles.then(async articles => {
 	const [html] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'view', 'blog_index.ejs'), {
 			postList: articles,
@@ -80,7 +83,7 @@ Promise.all(articles).then(async articles => {
 });
 
 // RSS feed
-Promise.all(articles).then(async articles => {
+sortedArticles.then(async articles => {
 	const [xml] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'view', 'atom.ejs'), {
 			postList: articles,
@@ -101,3 +104,32 @@ ejs.renderFile(path.join(__dirname, 'view', 'about.ejs'), {
 	path.join(baseDir, 'about.html'),
 	html,
 ));
+
+sortedArticles.then(async articles => {
+	const articlesByTag = articles.reduce((acc, article) => {
+		article.tags.forEach(tag => {
+			if (acc[tag] === undefined) {
+				acc[tag] = [article];
+			} else {
+				acc[tag].push(article);
+			}
+		});
+		return acc;
+	}, {});
+
+	const tagDir = path.join(blogDir, 'tag');
+	await mkdir(tagDir, { recursive: true });
+
+	Object.entries(articlesByTag).forEach(async ([tag, articles]) => {
+		const html = await ejs.renderFile(path.join(__dirname, 'view', 'blog_index.ejs'), {
+			postList: articles,
+			canonical: `${baseUrl}/blog/tag/${tag}`,
+			tag,
+		});
+
+		writeFile(
+			path.join(tagDir, `${tag}.html`),
+			html,
+		);
+	});
+});
