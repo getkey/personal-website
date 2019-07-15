@@ -105,6 +105,20 @@ ejs.renderFile(path.join(__dirname, 'view', 'about.ejs'), {
 	html,
 ));
 
+// 404
+ejs.renderFile(path.join(__dirname, 'view', '404.ejs')).then(html => writeFile(
+	path.join(baseDir, '404.html'),
+	html,
+));
+
+// home
+ejs.renderFile(path.join(__dirname, 'view', 'home.ejs'), {
+	canonical: baseUrl,
+}).then(html => writeFile(
+	path.join(baseDir, 'index.html'),
+	html,
+));
+
 sortedArticles.then(async articles => {
 	const articlesByTag = articles.reduce((acc, article) => {
 		article.tags.forEach(tag => {
