@@ -76,48 +76,10 @@ p, li {
 	font-family: "Open Sans";
 	font-weight: 300;
 }
-#navbar div {
-	display: flex;
-	align-items: center;
-}
-#navbar div > * {
+#navbar > a {
 	margin: 0 0.5rem;
-}
-#navbar div a {
 	display: block;
 	width: 2.2rem;
-}
-#navbar div form {
-	border-bottom: 0.15rem solid white;
-}
-#navbar div form input {
-	max-width: 10ch;
-	background-color: transparent;
-	border: none;
-}
-#navbar div form button {
-	background-color: transparent;
-	border: none;
-}
-#navbar div form button img {
-	width: 2rem;
-}
-
-iframe, main form textarea {
-	width: 100%;
-}
-iframe {
-	min-height: 50vh;
-}
-
-main form .table {
-	display: table;
-}
-main form .table .row {
-	display: table-row;
-}
-main form .table .row .cell {
-	display: table-cell;
 }
 
 main > a { /* blogpost card */
