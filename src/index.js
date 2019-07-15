@@ -6,6 +6,7 @@ const ejs = require('ejs');
 const render = require('./lib/render.js');
 const { formatTitle, idFromDate } = require('./lib/url.js');
 const { baseUrl } = require('./config.js');
+const redirects = require('./redirects.json');
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -97,28 +98,6 @@ sortedArticles.then(async articles => {
 	);
 });
 
-// about
-ejs.renderFile(path.join(__dirname, 'templates', 'about.ejs'), {
-	canonical: `${baseUrl}/about`,
-}).then(html => writeFile(
-	path.join(baseDir, 'about.html'),
-	html,
-));
-
-// 404
-ejs.renderFile(path.join(__dirname, 'templates', '404.ejs')).then(html => writeFile(
-	path.join(baseDir, '404.html'),
-	html,
-));
-
-// home
-ejs.renderFile(path.join(__dirname, 'templates', 'home.ejs'), {
-	canonical: baseUrl,
-}).then(html => writeFile(
-	path.join(baseDir, 'index.html'),
-	html,
-));
-
 sortedArticles.then(async articles => {
 	const articlesByTag = articles.reduce((acc, article) => {
 		article.tags.forEach(tag => {
@@ -146,4 +125,55 @@ sortedArticles.then(async articles => {
 			html,
 		);
 	});
+});
+
+// about
+ejs.renderFile(path.join(__dirname, 'templates', 'about.ejs'), {
+	canonical: `${baseUrl}/about`,
+}).then(html => writeFile(
+	path.join(baseDir, 'about.html'),
+	html,
+));
+
+// 404
+ejs.renderFile(path.join(__dirname, 'templates', '404.ejs')).then(html => writeFile(
+	path.join(baseDir, '404.html'),
+	html,
+));
+
+// home
+ejs.renderFile(path.join(__dirname, 'templates', 'home.ejs'), {
+	canonical: baseUrl,
+}).then(html => writeFile(
+	path.join(baseDir, 'index.html'),
+	html,
+));
+
+// redirects
+Object.entries(redirects).map(async ([from, to]) => {
+	const parsed = from.split('/').filter(subs => subs !== '');
+	const basename = parsed.slice(0, -1);
+	const filename = parsed.slice(-1)[0];
+
+	const [html] = await Promise.all([
+		ejs.renderFile(path.join(__dirname, 'templates', 'redirect.ejs'), {
+			to,
+		}),
+		mkdir(path.join(baseDir, ...basename), { recursive: true }),
+	]);
+
+	const outputPathComponents = [
+		...basename,
+		`${filename}.html`,
+	];
+	const escapedOutputPathComponents = outputPathComponents.map(pathComponent => encodeURIComponent(pathComponent));
+
+	writeFile(
+		path.join(baseDir, ...outputPathComponents),
+		html,
+	);
+	writeFile(
+		path.join(baseDir, ...escapedOutputPathComponents),
+		html,
+	);
 });
