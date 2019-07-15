@@ -1,17 +1,5 @@
 /node_modules/
 /yarn-error.log
 
-# hash that allows posting
-/hash.txt
-
-# generated config files for Nginx and systemd
-/generated/
-
-# stuff I put on the server to send/share with my friends
-/shared/
-
-# resources included in blog posts
-/static/
-
 /public/blog/
 /public/*.html
