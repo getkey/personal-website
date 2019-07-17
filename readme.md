@@ -1,52 +1,14 @@
-# [Getkey.eu](https://getkey.eu)
+# [Getkey.eu](https://getkey.eu) [![pipeline status](https://gitlab.com/getkey/personal-website/badges/master/pipeline.svg)](https://gitlab.com/getkey/personal-website/commits/master)
 
 This is my personal website.
 
-## Setup
-
-Install [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.org/). Then `npm install` will take care of the others dependencies.
-
-## Starting it! 
-
-``` sh
-$ node ./src/index.js start 8080
-```
-
-It can then be accessed at [http://localhost:8080](http://localhost:8080).
-
-### Generating Nginx and systemd config files
-
 ```sh
-$ utils/generate_config.sh
+yarn
+yarn build
 ```
 
-You will be able to find them in `./generated/`.
-
-### Regenerating the cache
-
-```sh
-$ node ./src/index.js regenerate-cache
-```
-
-### Set a password
-
-This password is needed to post or edit blogposts.
-
-```sh
-$ node ./src/index.js set-password
-```
-
-The hash will be saved as `hash.txt`.
-
-## How to post on the blog
-
-Make sure you have [set a password](#set-a-password).
-
-Now, with your browser, you can go to `/blog/write` to make your first post, which will be saved with a timestamp (for example as `/blog/5592ba9f/title-of-the-post`).
-If you wish to edit a blog post, you must append its URL with `?edit` (with my example you would end up with `/blog/5592ba9f/title-of-the-post?edit`).
+The static website will be generated in `./static/`.
 
 ## TODO
 
 * Add more branding. There is none at the moment.
-* Fix the search tool.
-* Migrate to PostgreSQL (or make the site static?)
