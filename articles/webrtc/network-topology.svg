@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 100 480 380">
+	<defs>
+		<g id="master">
+			<circle cx="40" cy="40" r="40" fill="red"/>
+			<text text-anchor="middle" dominant-baseline="middle" x="40" y="40">Master</text>
+		</g>
+		<g id="client">
+			<circle cx="40" cy="40" r="40" fill="green"/>
+			<text text-anchor="middle" dominant-baseline="middle" x="40" y="40">Browser</text>
+		</g>
+		<g id="slave">
+			<circle cx="40" cy="40" r="40" fill="blue"/>
+			<text text-anchor="middle" dominant-baseline="middle" y="40">
+				<tspan x="40" dy="-7">Game</tspan>
+				<tspan x="40" dy="12">server</tspan>
+			</text>
+		</g>
+	</defs>
+	<line x1="140" y1="140" x2="40" y2="140" stroke="orange"/>
+	<line x1="40" y1="140" x2="290" y2="290" stroke="black"/>
+	<use x="0" y="100" xlink:href="#client"/>
+	<line x1="140" y1="140" x2="240" y2="140" stroke="orange"/>
+	<line x1="240" y1="140" x2="290" y2="290" stroke="black"/>
+	<use x="200" y="100" xlink:href="#client"/>
+	<line x1="140" y1="140" x2="140" y2="240" stroke="orange"/>
+	<line x1="140" y1="240" x2="290" y2="290" stroke="black"/>
+	<use x="100" y="200" xlink:href="#client"/>
+
+	<line x1="140" y1="140" x2="290" y2="290" stroke="black"/>
+	<use x="100" y="100" xlink:href="#slave"/>
+
+
+	<line x1="440" y1="340" x2="440" y2="440" stroke="orange"/>
+	<line x1="440" y1="340" x2="290" y2="290" stroke="black"/>
+	<use x="400" y="300" xlink:href="#client"/>
+	<line x1="340" y1="440" x2="440" y2="440" stroke="orange"/>
+	<line x1="340" y1="440" x2="290" y2="290" stroke="black"/>
+	<use x="300" y="400" xlink:href="#client"/>
+
+	<line x1="440" y1="440" x2="290" y2="290" stroke="black"/>
+	<use x="400" y="400" xlink:href="#slave"/>
+
+
+	<use x="400" y="300" xlink:href="#client"/>
+	<use x="300" y="400" xlink:href="#client"/>
+
+	<line x1="140" y1="440" x2="290" y2="290" stroke="black"/>
+	<use x="100" y="400" xlink:href="#slave"/>
+
+
+	<use x="250" y="250" xlink:href="#master"/>
+</svg>

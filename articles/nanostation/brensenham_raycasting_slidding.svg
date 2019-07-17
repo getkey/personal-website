@@ -1,0 +1,111 @@
+<svg version="1.1" baseProfile="full" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<marker id='head' orient="auto" markerWidth='2' markerHeight='4' refX='0.1' refY='2'>
+			<path d='M0,0 V4 L2,2 Z' fill="grey"/>
+		</marker>
+	</defs>
+	<rect width="100%" height="100%" fill="blue" />
+	<rect width="100%" height="20%" y="80%" fill="black" />
+	<rect width="10%" height="10%" y="60%" x="20%" fill="white" id="character" />
+
+	<line x1="25%" y1="65%" x2="65%" y2="85%" stroke="grey" stroke-width="3" marker-end="url(#head)" />
+
+	<script type="text/javascript">
+	// <![CDATA[
+		const ns = document.documentElement.namespaceURI;
+		const character = document.documentElement.getElementById('character');
+		function addRect(x, y) {
+			const rect = document.createElementNS(ns, 'rect');
+			rect.setAttribute('width', '10%');
+			rect.setAttribute('height', '10%');
+
+			rect.setAttribute('x', `${x}0%`);
+			rect.setAttribute('y', `${y}0%`);
+
+			rect.setAttribute('fill', y < 8 ? 'green' : 'red');
+
+			return rect;
+		}
+
+		let frame = 0;
+
+		const save = [];
+		const texts = [];
+		const wrong = [];
+		function append(elem, where = save) {
+			document.documentElement.appendChild(elem);
+			where.push(elem);
+		}
+		function clear(what = save) {
+			what.forEach(elem => elem.remove());
+		}
+
+		const intervalId = window.setInterval(() => {
+			switch(frame) {
+				case 0:
+					append(addRect(3, 7));
+					break;
+				case 1:
+					append(addRect(4, 7));
+					break;
+				case 2: {
+						const text = document.createElementNS(ns, 'text');
+						text.setAttribute('fill', `white`);
+						text.setAttribute('x', `0%`);
+						text.setAttribute('y', `10%`);
+						text.setAttribute('textLength', `100%`);
+						text.textContent = 'Something is blocking on the x direction';
+						append(text, texts);
+
+						const tex2 = document.createElementNS(ns, 'text');
+						tex2.setAttribute('fill', `white`);
+						tex2.setAttribute('x', `10%`);
+						tex2.setAttribute('y', `15%`);
+						tex2.textContent = 'Let\'s try the y direction';
+						append(tex2, texts);
+
+						append(addRect(5, 8), wrong);
+					}
+					break;
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+					break;
+				case 7: {
+						clear(texts);
+						clear(wrong);
+						const text = document.createElementNS(ns, 'text');
+						text.setAttribute('fill', `white`);
+						text.setAttribute('x', `10%`);
+						text.setAttribute('y', `10%`);
+						text.textContent = 'Succes! Let\'s move';
+						append(text);
+						append(addRect(5, 7));
+					}
+					break;
+				case 8:
+				case 9:
+				case 10:
+					break;
+				case 11:
+					clear();
+					character.setAttribute('x', '50%');
+					character.setAttribute('y', '70%');
+					break;
+				case 12:
+				case 13:
+				case 14:
+					break;
+				case 15:
+					character.setAttribute('x', '20%');
+					character.setAttribute('y', '60%');
+					frame = 0;
+					return;
+					break;
+			}
+			frame += 1;
+		}, 250);
+	// ]]>
+	</script>
+</svg>

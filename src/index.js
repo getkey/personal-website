@@ -11,12 +11,14 @@ const redirects = require('./redirects.json');
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
+const readdir = util.promisify(fs.readdir);
+const copyFile = util.promisify(fs.copyFile);
 
 const articlesDir = path.join(__dirname, '..', 'articles');
 const baseDir = path.join(__dirname, '..', 'public');
 const blogDir = path.join(baseDir, 'blog');
 
-const articles = fs.readdirSync(articlesDir)
+const whenArticlesParsed = fs.readdirSync(articlesDir)
 	.map(dirName => Promise.all([
 		readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
 		readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then(metadataStr => {
@@ -24,9 +26,12 @@ const articles = fs.readdirSync(articlesDir)
 			metadata.date = new Date(metadata.date);
 			return metadata;
 		}),
+		Promise.resolve(dirName),
 	]))
-	.map(promise => promise.then(([md, { tags, lang, date }]) => {
+	.map(async promise => {
+		const [md, { tags, lang, date }, dirName] = await promise;
 		const { content, excerpt, title } = render(md);
+
 		return {
 			content,
 			excerpt,
@@ -36,13 +41,14 @@ const articles = fs.readdirSync(articlesDir)
 			lang,
 			date,
 			formatedTitle: formatTitle(title),
+			inputDir: dirName,
 		};
-	}));
+	});
 
 // blog articles
-articles.forEach(async promise => {
-	const { content, title, date, tags, lang, id, formatedTitle } = await promise;
-	const articleDir = path.join(blogDir, id);
+whenArticlesParsed.forEach(async promise => {
+	const { content, title, date, tags, lang, id, formatedTitle, inputDir } = await promise;
+	const outputDir = path.join(blogDir, id);
 
 	const [html] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'templates', 'blog_render.ejs'), {
@@ -53,16 +59,27 @@ articles.forEach(async promise => {
 			lang,
 			canonical: `${baseUrl}/blog/${id}/${formatedTitle}`,
 		}),
-		mkdir(articleDir, { recursive: true }),
+		mkdir(outputDir, { recursive: true }),
 	]);
 
 	writeFile(
-		path.join(articleDir, `${formatedTitle}.html`),
+		path.join(outputDir, `${formatedTitle}.html`),
 		html,
 	);
+
+	// copy assets (images, etc)
+	const articleInputDir = path.join(articlesDir, inputDir);
+	const allFiles = await readdir(articleInputDir);
+
+	allFiles
+		.filter(filename => !['index.md', 'metadata.json'].includes(filename))
+		.map(filename => copyFile(
+			path.join(articleInputDir, filename),
+			path.join(outputDir, filename),
+		));
 });
 
-const sortedArticles = Promise.all(articles).then(articles => ([
+const sortedArticles = Promise.all(whenArticlesParsed).then(articles => ([
 	...articles,
 ].sort((a, b) => b.date - a.date)));
 const mkBlogDir = mkdir(blogDir, { recursive: true });
