@@ -144,14 +144,6 @@ sortedArticles.then(async articles => {
 	});
 });
 
-// about
-ejs.renderFile(path.join(__dirname, 'templates', 'about.ejs'), {
-	canonical: `${baseUrl}/about`,
-}).then(html => writeFile(
-	path.join(baseDir, 'about.html'),
-	html,
-));
-
 // 404
 ejs.renderFile(path.join(__dirname, 'templates', '404.ejs')).then(html => writeFile(
 	path.join(baseDir, '404.html'),

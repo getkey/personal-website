@@ -155,3 +155,10 @@ details > :not(summary) {
 #tags > a:last-child {
 	margin-right: 0;
 }
+
+.license {
+	color: grey;
+	text-align: center;
+	font-size: 0.9em;
+	margin-top: 2rem;
+}

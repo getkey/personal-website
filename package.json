@@ -4,13 +4,13 @@
   "license": "Apache-2.0",
   "main": "./src/index.js",
   "dependencies": {
-    "ejs": "^2.6.2",
-    "highlight.js": "9.15.8",
+    "ejs": "^2.7.1",
+    "highlight.js": "9.15.10",
     "koa-bodyparser": "4.2.1",
     "marked": "^0.7.0"
   },
   "devDependencies": {
-    "eslint": "6.0.1",
+    "eslint": "6.5.1",
     "pre-commit": "1.x"
   },
   "repository": {
