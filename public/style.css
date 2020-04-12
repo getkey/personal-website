@@ -162,3 +162,29 @@ details > :not(summary) {
 	font-size: 0.9em;
 	margin-top: 2rem;
 }
+
+/* homepage */
+
+.homepage-content {
+	display: flex;
+	align-items: center;
+}
+.homepage-content picture {
+	width: 45%;
+	margin-right: 10%;
+}
+.homepage-content picture img {
+	width: 100%;
+	border-radius: 40px;
+}
+
+@media screen and (max-width: 700px) {
+	.homepage-content {
+		flex-direction: column-reverse;
+	}
+	.homepage-content picture {
+		width: 70%;
+		margin-top: 1em;
+		margin-right: 0;
+	}
+}
