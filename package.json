@@ -19,7 +19,8 @@
   },
   "scripts": {
     "lint-stage": "./utils/lint_stage.sh",
-    "build": "node ./src/index.js"
+    "build": "node ./src/index.js",
+    "serve": "python -m http.server --directory public/"
   },
   "pre-commit": "lint-stage"
 }
