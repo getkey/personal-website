@@ -19,16 +19,16 @@ const baseDir = path.join(__dirname, '..', 'public');
 const blogDir = path.join(baseDir, 'blog');
 
 const whenArticlesParsed = fs.readdirSync(articlesDir)
-	.map(dirName => Promise.all([
+	.map((dirName) => Promise.all([
 		readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
-		readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then(metadataStr => {
+		readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then((metadataStr) => {
 			const metadata = JSON.parse(metadataStr);
 			metadata.date = new Date(metadata.date);
 			return metadata;
 		}),
 		Promise.resolve(dirName),
 	]))
-	.map(async promise => {
+	.map(async (promise) => {
 		const [md, { tags, lang, date }, dirName] = await promise;
 		const { content, excerpt, title } = render(md);
 
@@ -46,7 +46,7 @@ const whenArticlesParsed = fs.readdirSync(articlesDir)
 	});
 
 // blog articles
-whenArticlesParsed.forEach(async promise => {
+whenArticlesParsed.forEach(async (promise) => {
 	const { content, title, date, tags, lang, id, formatedTitle, inputDir } = await promise;
 	const outputDir = path.join(blogDir, id);
 
@@ -72,20 +72,20 @@ whenArticlesParsed.forEach(async promise => {
 	const allFiles = await readdir(articleInputDir);
 
 	allFiles
-		.filter(filename => !['index.md', 'metadata.json'].includes(filename))
-		.map(filename => copyFile(
+		.filter((filename) => !['index.md', 'metadata.json'].includes(filename))
+		.map((filename) => copyFile(
 			path.join(articleInputDir, filename),
 			path.join(outputDir, filename),
 		));
 });
 
-const sortedArticles = Promise.all(whenArticlesParsed).then(articles => ([
+const sortedArticles = Promise.all(whenArticlesParsed).then((articles) => ([
 	...articles,
 ].sort((a, b) => b.date - a.date)));
 const mkBlogDir = mkdir(blogDir, { recursive: true });
 
 // blog index
-sortedArticles.then(async articles => {
+sortedArticles.then(async (articles) => {
 	const [html] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'templates', 'blog_index.ejs'), {
 			postList: articles,
@@ -101,7 +101,7 @@ sortedArticles.then(async articles => {
 });
 
 // RSS feed
-sortedArticles.then(async articles => {
+sortedArticles.then(async (articles) => {
 	const [xml] = await Promise.all([
 		ejs.renderFile(path.join(__dirname, 'templates', 'atom.ejs'), {
 			postList: articles,
@@ -115,9 +115,9 @@ sortedArticles.then(async articles => {
 	);
 });
 
-sortedArticles.then(async articles => {
+sortedArticles.then(async (articles) => {
 	const articlesByTag = articles.reduce((acc, article) => {
-		article.tags.forEach(tag => {
+		article.tags.forEach((tag) => {
 			if (acc[tag] === undefined) {
 				acc[tag] = [article];
 			} else {
@@ -130,9 +130,9 @@ sortedArticles.then(async articles => {
 	const tagDir = path.join(blogDir, 'tag');
 	await mkdir(tagDir, { recursive: true });
 
-	Object.entries(articlesByTag).forEach(async ([tag, articles]) => {
+	Object.entries(articlesByTag).forEach(async ([tag, articles_]) => {
 		const html = await ejs.renderFile(path.join(__dirname, 'templates', 'blog_index.ejs'), {
-			postList: articles,
+			postList: articles_,
 			canonical: `${baseUrl}/blog/tag/${tag}`,
 			tag,
 		});
@@ -145,7 +145,7 @@ sortedArticles.then(async articles => {
 });
 
 // 404
-ejs.renderFile(path.join(__dirname, 'templates', '404.ejs')).then(html => writeFile(
+ejs.renderFile(path.join(__dirname, 'templates', '404.ejs')).then((html) => writeFile(
 	path.join(baseDir, '404.html'),
 	html,
 ));
@@ -153,14 +153,14 @@ ejs.renderFile(path.join(__dirname, 'templates', '404.ejs')).then(html => writeF
 // home
 ejs.renderFile(path.join(__dirname, 'templates', 'home.ejs'), {
 	canonical: baseUrl,
-}).then(html => writeFile(
+}).then((html) => writeFile(
 	path.join(baseDir, 'index.html'),
 	html,
 ));
 
 // redirects
 Object.entries(redirects).map(async ([from, to]) => {
-	const parsed = from.split('/').filter(subs => subs !== '');
+	const parsed = from.split('/').filter((subs) => subs !== '');
 	const basename = parsed.slice(0, -1);
 	const filename = parsed.slice(-1)[0];
 
@@ -175,7 +175,7 @@ Object.entries(redirects).map(async ([from, to]) => {
 		...basename,
 		`${filename}.html`,
 	];
-	const escapedOutputPathComponents = outputPathComponents.map(pathComponent => encodeURIComponent(pathComponent));
+	const escapedOutputPathComponents = outputPathComponents.map((pathComponent) => encodeURIComponent(pathComponent));
 
 	writeFile(
 		path.join(baseDir, ...outputPathComponents),
