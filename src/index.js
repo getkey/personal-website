@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const ejs = require('ejs');
+const fm = require('front-matter');
 
 const render = require('./lib/render.js');
 const { formatTitle, idFromDate } = require('./lib/url.js');
@@ -19,17 +20,23 @@ const baseDir = path.join(__dirname, '..', 'public');
 const blogDir = path.join(baseDir, 'blog');
 
 const whenArticlesParsed = fs.readdirSync(articlesDir)
-	.map((dirName) => Promise.all([
-		readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8'),
-		readFile(path.join(articlesDir, dirName, 'metadata.json'), 'utf8').then((metadataStr) => {
-			const metadata = JSON.parse(metadataStr);
-			metadata.date = new Date(metadata.date);
-			return metadata;
-		}),
-		Promise.resolve(dirName),
-	]))
+	.map((dirName) => readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8').then((article) => {
+		const { body, attributes: { tags, date, lang } } = fm(article);
+
+		if ([tags, date, lang].includes(undefined)) {
+			throw new Error(`Missing attribute in ${dirName}'s front-matter.'`);
+		}
+
+		return {
+			md: body,
+			tags,
+			date: new Date(date),
+			lang,
+			dirName,
+		};
+	}))
 	.map(async (promise) => {
-		const [md, { tags, lang, date }, dirName] = await promise;
+		const { md, tags, date, lang, dirName } = await promise;
 		const { content, excerpt, title } = render(md);
 
 		return {
@@ -72,7 +79,7 @@ whenArticlesParsed.forEach(async (promise) => {
 	const allFiles = await readdir(articleInputDir);
 
 	allFiles
-		.filter((filename) => !['index.md', 'metadata.json'].includes(filename))
+		.filter((filename) => filename !== 'index.md')
 		.map((filename) => copyFile(
 			path.join(articleInputDir, filename),
 			path.join(outputDir, filename),

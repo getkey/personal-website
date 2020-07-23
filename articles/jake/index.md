@@ -1,3 +1,8 @@
+---
+tags: ["Soylent-like", "Jake"]
+date: "2017-02-07T22:07:40Z"
+lang: "en"
+---
 # Jake review
 
 [Jake](https://jakefood.com) is a Soylent-like manufactured in the Netherlands (like many of them it seems!).

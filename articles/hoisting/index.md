@@ -1,3 +1,9 @@
+---
+tags: ["JavaScript", "hoisting", "TDZ"]
+date: "2016-05-12T18:27:45Z"
+lang: "en"
+---
+
 # Hoisting in JavaScript
 
 This behavior can surprise beginners to JavaScript, and also, I admit, people like me who learned JavaScript by doing.

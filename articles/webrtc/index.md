@@ -1,3 +1,9 @@
+---
+tags: ["WebRTC", "game dev"]
+date: "2016-12-27T18:19:59Z"
+lang: "en"
+---
+
 # WebRTC: the future of web games
 
 At some point in [JumpSuit](https://github.com/KordonBleu/jumpsuit)'s development I realized it was impossible to create the game we envisioned: WebSockets are just too slow, because they sit on top of TCP.

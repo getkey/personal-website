@@ -1,3 +1,9 @@
+---
+tags: ["ISN", "Python", "socket", "game server", "Asyncio", "Protocol Buffers", "UDP"]
+date: "2015-09-27T21:23:31Z"
+lang: "fr"
+---
+
 # Mon projet d'ISN : Mario Kombat
 
 Lors de ma dernière année de lycée, dans le cadre de l'option ISN, j'ai réalisé en groupe un projet sur lequel nous avons été notés au Bac (j'ai eu 20/20). À la fin de l'année nous devons rendre un dossier papier, que voici. Je le poste ici car il y a des choses intéressantes dans ce projet (les trucs sur la reliabilité), et de plus il peut sans doute aider les futurs lycéens à s'en inspirer pour structurer leur dossier.
