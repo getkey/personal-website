@@ -20,7 +20,7 @@ const blogDir = path.join(baseDir, 'blog');
 
 const whenArticlesParsed = fs.readdirSync(articlesDir)
 	.map((dirName) => readFile(path.join(articlesDir, dirName, 'index.md'), 'utf8').then((article) => {
-		const { body, attributes: { tags, date, lang } } = fm(article);
+		const { body, attributes: { tags, date, lang, title } } = fm(article);
 
 		if ([tags, date, lang].includes(undefined)) {
 			throw new Error(`Missing attribute in ${dirName}'s front-matter.'`);
@@ -32,11 +32,12 @@ const whenArticlesParsed = fs.readdirSync(articlesDir)
 			date: new Date(date),
 			lang,
 			dirName,
+			title,
 		};
 	}))
 	.map(async (promise) => {
-		const { md, tags, date, lang, dirName } = await promise;
-		const { content, excerpt, title } = render(md);
+		const { md, tags, date, lang, dirName, title } = await promise;
+		const { content, excerpt } = render(md);
 
 		return {
 			content,

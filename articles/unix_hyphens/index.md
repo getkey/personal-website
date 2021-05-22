@@ -1,10 +1,9 @@
 ---
+title: "Hyphens in UNIX's filenames"
 tags: ["Shell", "UNIX", "CLI"]
 date: "2014-08-08T14:00:00Z"
 lang: "en"
 ---
-
-# Hyphens in UNIX's filenames
 
 Today I discovered an interesting UNIX design flaw. UNIX deals badly with files  starting with `-`. Let's mess around!
 

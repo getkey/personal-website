@@ -1,10 +1,9 @@
 ---
+title: "Privilege escalation with setuid"
 tags: ["setuid", "setgid", "UNIX", "CLI"]
 date: "2014-09-12T19:17:49Z"
 lang: "en"
 ---
-
-# Privilege escalation with setuid
 
 ## What are setuid and setgid?
 

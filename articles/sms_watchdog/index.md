@@ -1,10 +1,9 @@
 ---
+title: "SMS Watchdog"
 tags: ["systemd"]
 date: "2016-03-03T19:51:37Z"
 lang: "en"
 ---
-
-# SMS Watchdog
 
 My mobile carrier offers access to an [API that can send SMS](https://mobile.free.fr/moncompte/) to its users. With systemd's timers, I have been able to make a script that warns me when the load on my server is too high!
 Basically, timers work by stating a service repeatedly; which in turn starts a script in this case.

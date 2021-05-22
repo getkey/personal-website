@@ -1,10 +1,9 @@
 ---
+title: "WundrBar review"
 tags: ["Soylent-like", "Queal", "WundrBar"]
 date: "2017-03-13T22:15:56Z"
 lang: "en"
 ---
-
-# WundrBar review
 
 [WundrBars](https://order.queal.com/bar/) were created to provide the same things as their powder counterpart, in a more convenient format.
 

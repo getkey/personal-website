@@ -1,10 +1,9 @@
 ---
+title: "A virtual webcam"
 tags: ["ffmpeg", "webcam", "microphone", "UNIX", "CLI"]
 date: "2015-03-23T19:38:07Z"
 lang: "en"
 ---
-
-# A virtual webcam
 
 There are a lot of fun things you can do with Linux. What I propose you today is to stream an arbitrary video as if it were your webcam and microphone output.
 

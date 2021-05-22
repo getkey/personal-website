@@ -1,10 +1,9 @@
 ---
+title: "Queal"
 tags: ["Soylent-like", "Queal"]
 date: "2016-11-26T20:58:11Z"
 lang: "en"
 ---
-
-# Queal
 
 [Soylent](https://en.wikipedia.org/wiki/Soylent_%28food%29) is something I've wanted to try for a while, but I only got around to it recently (mostly because I don't live with my parents anymore).
 

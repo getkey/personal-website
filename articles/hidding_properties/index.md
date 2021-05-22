@@ -1,10 +1,9 @@
 ---
+title: "Hiding properties in JS... for real"
 tags: ["JavaScript", "proxy"]
 date: "2017-12-10T15:52:16.556Z"
 lang: "en"
 ---
-
-# Hiding properties in JS... for real
 
 Sometimes, you want to hide the property of an object<sup id="a1">[1](#f1)</sup>. Probably you are a library author and you are afraid that:
 
