@@ -1,21 +1,21 @@
-image: node:lts
+default:
+  image: node:lts
+  cache:
+    paths:
+    - node_modules/
+    - .yarn-cache
 
-cache:
-  paths:
-  - node_modules/
+variables:
+  YARN_CACHE_FOLDER: .yarn-cache
 
 stages:
-  - deps
   - build
   - deploy
 
-
-deps:
-  stage: deps
-  script: yarn install
-
 build:
   stage: build
+  before_script:
+    - yarn install
   script:
     - yarn build
   variables:
