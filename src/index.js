@@ -7,7 +7,6 @@ const fm = require('front-matter');
 const render = require('./lib/render.js');
 const { formatTitle, idFromDate } = require('./lib/url.js');
 const { baseUrl } = require('./config.js');
-const redirects = require('./redirects.json');
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -164,32 +163,3 @@ ejs.renderFile(path.join(__dirname, 'templates', 'home.ejs'), {
 	path.join(baseDir, 'index.html'),
 	html,
 ));
-
-// redirects
-Object.entries(redirects).map(async ([from, to]) => {
-	const parsed = from.split('/').filter((subs) => subs !== '');
-	const basename = parsed.slice(0, -1);
-	const filename = parsed.slice(-1)[0];
-
-	const [html] = await Promise.all([
-		ejs.renderFile(path.join(__dirname, 'templates', 'redirect.ejs'), {
-			to,
-		}),
-		mkdir(path.join(baseDir, ...basename), { recursive: true }),
-	]);
-
-	const outputPathComponents = [
-		...basename,
-		`${filename}.html`,
-	];
-	const escapedOutputPathComponents = outputPathComponents.map((pathComponent) => encodeURIComponent(pathComponent));
-
-	writeFile(
-		path.join(baseDir, ...outputPathComponents),
-		html,
-	);
-	writeFile(
-		path.join(baseDir, ...escapedOutputPathComponents),
-		html,
-	);
-});
