@@ -76,6 +76,14 @@ p, li {
 	font-family: "Open Sans";
 	font-weight: 300;
 }
+#navbar ul li a#home {
+	display: flex;
+}
+#navbar ul li a#home img {
+	height: 1em;
+	margin-right: 0.1em;
+}
+
 #navbar > a {
 	margin: 0 0.5rem;
 	display: block;
