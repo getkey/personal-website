@@ -4,15 +4,15 @@
   "license": "Apache-2.0",
   "main": "./src/index.js",
   "dependencies": {
-    "ejs": "^3.1.7",
-    "eslint-config-getkey": "^0.2.2",
+    "ejs": "^3.1.9",
+    "eslint-config-getkey": "^0.2.3",
     "front-matter": "^4.0.2",
-    "highlight.js": "11.4.0",
-    "koa-bodyparser": "4.3.0",
+    "highlight.js": "11.8.0",
+    "koa-bodyparser": "4.4.1",
     "marked": "^4.0.10"
   },
   "devDependencies": {
-    "eslint": "8.6.0"
+    "eslint": "8.46.0"
   },
   "repository": {
     "type": "git",
