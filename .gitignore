@@ -1,5 +1,2 @@
-/node_modules/
-/yarn-error.log
-
-/public/blog/
-/public/*.html
+/public/
+/.hugo_build.lock

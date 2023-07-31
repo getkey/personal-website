@@ -1,38 +1,22 @@
 default:
-  image: node:lts
-  cache:
-    paths:
-    - node_modules/
-    - .yarn-cache
-
-variables:
-  YARN_CACHE_FOLDER: .yarn-cache
+  image: klakegg/hugo:busybox
 
 stages:
   - build
   - deploy
 
-validate:
-  stage: build
-  before_script:
-    - yarn install
-  script:
-    - yarn lint
-
 build:
   stage: build
-  before_script:
-    - yarn install
+  image: klakegg/hugo:busybox
   script:
-    - yarn build
-  variables:
-    NODE_ENV: production
+    - hugo
   artifacts:
     paths:
       - public
 
 pages:
   stage: deploy
+  image: alpine:latest
   script:
     - find public -type f -iregex '.*\.\(html\|js\|css\|svg\|webmanifest\|fnt\)$' -execdir gzip -f --keep {} \;
   artifacts:

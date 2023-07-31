@@ -1,0 +1,6 @@
+baseURL = 'https://getkey.eu/'
+title = 'Julien Mourer'
+
+[markup]
+  [markup.highlight]
+    style = 'onedark'

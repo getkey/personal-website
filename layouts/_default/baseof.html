@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width"/>
+	<title>{{ .Title }}</title>
+	<link rel="stylesheet" href="/style.css"/>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,300%7CMerriweather:300,400"/>
+	<link rel="icon" type="image/jpeg" href="/favicon64.jpg" sizes="64x64"/>
+	<link rel="icon" type="image/jpeg" href="/favicon128.jpg" sizes="128x128"/>
+	<link rel="icon" type="image/jpeg" href="/favicon256.jpg" sizes="256x256"/>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-5WZ8N9W');</script>
+	{{ range .AlternativeOutputFormats -}}
+		{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+	{{ end -}}
+</head>
+
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WZ8N9W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<nav id="navbar">
+	<ul>
+		<li><a href="/" id="home"><img src="/favicon64.jpg" alt=logo/>Home</a></li>
+		<li><a href="/blog">Blog</a></li>
+	</ul>
+	<a href="/blog/index.xml"><img src="/rss.svg" alt="RSS icon"/></a>
+</nav>
+
+<main lang="{{ .Params.lang | default "en" }}">
+	{{ block "main" . }}{{ end }}
+</main>
+</body>
+</html>
