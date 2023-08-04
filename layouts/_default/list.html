@@ -1,8 +1,8 @@
 {{ define "main" }}
 
 {{ range .Pages.ByPublishDate.Reverse }}
-	<a href="{{ .RelPermalink }}">
-		<article lang="<%- post.lang %>">
+	<a href="{{ .RelPermalink }}" lang="{{ .Params.lang }}">
+		<article>
 			<time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
 			<h1>{{ .Title }}</h1>
 			<p class="summary">{{ .Summary }}</p>

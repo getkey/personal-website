@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-<article>
+<article lang="{{ .Params.lang }}">
 <time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
 <h1>{{ .Title }}</h1>
 
