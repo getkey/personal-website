@@ -201,3 +201,7 @@ details > :not(summary) {
 		margin-right: 0;
 	}
 }
+
+.summary {
+	white-space: pre-wrap;
+}
