@@ -7,7 +7,7 @@ license: "CC-BY-4.0"
 aliases: ["/blog/5a2d5830/hiding-properties-in-js…-for-real", "/blog/5a2d5830/hiding-properties-in-js..-for-real"]
 ---
 
-Sometimes, you want to hide the property of an object<sup id="a1">[1](#f1)</sup>. Probably you are a library author and you are afraid that:
+Sometimes, you want to hide the property of an object[^1]. Probably you are a library author and you are afraid that:
 
 * your users will see it and attempt to use it
 * your users will try to enumerate over it although it might not make sense
@@ -61,6 +61,4 @@ I believe this is the ultimate solution, until JavaScript gets [friend classes](
 * I find it needlessly complicated
 * my gut feeling is that it goes against the freedom that JavaScript gives you - for better or worse
 
-***
-
-<b id="f1">1</b> I assume that in this case you can't use an [IIFE](https://en.wikipedia.org/wiki/Immediately-invoked_function_expression) because other parts of your library need to access these properties. [↩](#a1)
+[^1]: I assume that in this case you can't use an [IIFE](https://en.wikipedia.org/wiki/Immediately-invoked_function_expression) because other parts of your library need to access these properties.

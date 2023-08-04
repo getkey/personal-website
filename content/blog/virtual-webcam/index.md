@@ -9,16 +9,6 @@ aliases: ["/blog/55106b9f/a-virtual-webcam"]
 
 There are a lot of fun things you can do with Linux. What I propose you today is to stream an arbitrary video as if it were your webcam and microphone output.
 
-<details>
-
-<summary>See original (before 2018-06-18)</summary>
-
-## Some sort of disclaimer
-
-~~Okay, so the draft of this blog post has been sitting on my hard drive for months now, and if I don't post it yet, I'll never post it. The reason I didn't is because it is incomplete, as there's a tiny something I don't understand. I lost interest in this so I won't look for the solution myself, but if you find it you're welcome to share it with me! Anyway, let's see this.~~
-
-</details>
-
 <ins datetime="2018-06-18">I'd like to thank [Osqui LittleRiver](https://github.com/q2dg) who nicely sent me a mail with [the last missing piece](#sound-only) of this little experiment!</ins>
 
 ## Setup a virtual webcam
@@ -93,23 +83,11 @@ If it doesn't work, you'll have to explicitly set options for the input file, re
 
 ### Sound only
 
-<details>
-
-<summary>See original (before 2018-06-18)</summary>
-
-~~Ok, this is the part I'm unsure about. I don't get why I have to specify `,1` in `hw:3,1` . If this setting doesn't work for you, well, try trial and error. And if you know why it's this and not anything else, I'll be glad to hear why!~~
-
-</details>
-
-<ins datetime="2018-06-18">
-
 As we saw before, the ID of soundcard I want to use is 3. But I also have to specify the "device".
 
 The card device is [a configuration](http://www.volkerschatz.com/noise/alsa.html#hardware) in which a soundcard can be. For example, mine supports 7.1, 5.1, 5.0, etc. audio systems, and has a device for each.
 
 `aplay -l` can be used to list the combinations of soundcard/devices. In my case the device is 1, so I'll go for `hw:3,1`.
-
-</ins>
 
 ```console
 $ ffmpeg -i some/test/file.mp3 -f alsa hw:3,1
