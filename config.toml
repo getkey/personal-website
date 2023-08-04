@@ -1,6 +1,10 @@
 baseURL = 'https://getkey.eu/'
 title = 'Julien Mourer'
 
+
+[taxonomies]
+  tag = 'tags'
+
 [markup]
   [markup.highlight]
     style = 'onedark'
