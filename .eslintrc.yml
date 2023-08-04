@@ -1,7 +1,0 @@
-env:
-  node: true
-extends:
-  - eslint-config-getkey
-  - 'eslint:recommended'
-parserOptions:
-  ecmaVersion: 8
