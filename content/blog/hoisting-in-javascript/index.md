@@ -4,6 +4,7 @@ tags: ["JavaScript", "hoisting", "TDZ"]
 date: "2016-05-12T18:27:45Z"
 lang: "en"
 license: "CC-BY-4.0"
+aliases: ["/blog/5734cb21/hoisting-in-javascript"]
 ---
 
 This behavior can surprise beginners to JavaScript, and also, I admit, people like me who learned JavaScript by doing.

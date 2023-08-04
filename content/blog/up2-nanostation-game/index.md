@@ -4,6 +4,7 @@ tags: ["arduino"]
 date: "2019-01-20T14:39:47.071Z"
 lang: "en"
 license: "CC-BY-4.0"
+aliases: ["/blog/5c448833/up2-a-nanostation-game"]
 ---
 
 A while ago, I received an odd little piece of hardware in the mail.
