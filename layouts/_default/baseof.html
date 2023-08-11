@@ -3,7 +3,11 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width"/>
-	<title>{{ .Title }}</title>
+	{{ if .Title }}
+		<title>{{ .Title }}</title>
+	{{ else }}
+		<title>{{ .Summary }}</title>
+	{{ end }}
 	<link rel="stylesheet" href="/style.css"/>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,300%7CMerriweather:300,400"/>
 	<link rel="icon" type="image/jpeg" href="/favicon64.jpg" sizes="64x64"/>

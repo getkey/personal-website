@@ -4,7 +4,9 @@
 	<a href="{{ .RelPermalink }}" lang="{{ .Params.lang }}">
 		<article>
 			<time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
-			<h1>{{ .Title }}</h1>
+			{{ if .Title }}
+				<h1>{{ .Title }}</h1>
+			{{ end }}
 			<p class="summary">{{ .Summary }}</p>
 		</article>
 	</a>
