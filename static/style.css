@@ -119,6 +119,9 @@ article img {
 article > *:nth-child(2) { /* the date is the first child */
 	margin-top: 0;
 }
+article > *:last-child {
+	margin-bottom: 0;
+}
 
 article.preview {
 	position: relative;
