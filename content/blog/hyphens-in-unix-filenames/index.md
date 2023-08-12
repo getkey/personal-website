@@ -1,6 +1,6 @@
 ---
 title: "Hyphens in UNIX filenames"
-tags: ["Shell", "UNIX", "CLI"]
+tags: ["software"]
 date: "2014-08-08T14:00:00Z"
 lang: "en"
 license: "CC-BY-4.0"

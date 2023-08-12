@@ -1,6 +1,6 @@
 ---
 title: "Mon projet d'ISN : Mario Kombat"
-tags: ["ISN", "Python", "socket", "game server", "Asyncio", "Protocol Buffers", "UDP"]
+tags: ["software"]
 date: "2015-09-27T21:23:31Z"
 lang: "fr"
 license: "CC-BY-4.0"

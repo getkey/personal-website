@@ -1,6 +1,6 @@
 ---
 title: "WundrBar review"
-tags: ["Soylent-like", "Queal", "WundrBar"]
+tags: ["Soylent-like"]
 date: "2017-03-13T22:15:56Z"
 lang: "en"
 license: "CC-BY-4.0"

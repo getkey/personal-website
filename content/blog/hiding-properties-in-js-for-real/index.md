@@ -1,6 +1,6 @@
 ---
 title: "Hiding properties in JS... for real"
-tags: ["JavaScript", "proxy"]
+tags: ["software"]
 date: "2017-12-10T15:52:16.556Z"
 lang: "en"
 license: "CC-BY-4.0"

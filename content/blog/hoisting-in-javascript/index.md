@@ -1,6 +1,6 @@
 ---
 title: "Hoisting in JavaScript"
-tags: ["JavaScript", "hoisting", "TDZ"]
+tags: ["software"]
 date: "2016-05-12T18:27:45Z"
 lang: "en"
 license: "CC-BY-4.0"

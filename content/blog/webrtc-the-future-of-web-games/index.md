@@ -1,6 +1,6 @@
 ---
 title: "WebRTC: the future of web games"
-tags: ["WebRTC", "game dev"]
+tags: ["software"]
 date: "2016-12-27T18:19:59Z"
 lang: "en"
 license: "CC-BY-4.0"

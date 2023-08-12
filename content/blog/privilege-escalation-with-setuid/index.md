@@ -1,6 +1,6 @@
 ---
 title: "Privilege escalation with setuid"
-tags: ["setuid", "setgid", "UNIX", "CLI"]
+tags: ["software"]
 date: "2014-09-12T19:17:49Z"
 lang: "en"
 license: "CC-BY-4.0"

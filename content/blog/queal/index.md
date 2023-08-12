@@ -1,6 +1,6 @@
 ---
 title: "Queal"
-tags: ["Soylent-like", "Queal"]
+tags: ["Soylent-like"]
 date: "2016-11-26T20:58:11Z"
 lang: "en"
 license: "CC-BY-4.0"

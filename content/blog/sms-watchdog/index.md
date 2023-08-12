@@ -1,6 +1,6 @@
 ---
 title: "SMS Watchdog"
-tags: ["systemd"]
+tags: ["software"]
 date: "2016-03-03T19:51:37Z"
 lang: "en"
 license: "CC-BY-4.0"

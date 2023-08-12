@@ -1,6 +1,6 @@
 ---
 title: "Jake review"
-tags: ["Soylent-like", "Jake"]
+tags: ["Soylent-like"]
 date: "2017-02-07T22:07:40Z"
 lang: "en"
 license: "CC-BY-4.0"

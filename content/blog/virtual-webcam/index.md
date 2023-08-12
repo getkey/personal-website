@@ -1,6 +1,6 @@
 ---
 title: "A virtual webcam"
-tags: ["ffmpeg", "webcam", "microphone", "UNIX", "CLI"]
+tags: ["software"]
 date: "2015-03-23T19:38:07Z"
 lang: "en"
 license: "CC-BY-4.0"

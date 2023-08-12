@@ -1,6 +1,6 @@
 ---
 title: "Up2, a NanoStation game"
-tags: ["arduino"]
+tags: ["software"]
 date: "2019-01-20T14:39:47.071Z"
 lang: "en"
 license: "CC-BY-4.0"
