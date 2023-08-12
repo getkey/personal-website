@@ -18,10 +18,9 @@
 
 {{ $taxonomy := "tags" }} {{ with .Param $taxonomy }}
 <nav id="tags">
-	{{ range $index, $tag := . }} {{ with $.Site.GetPage (printf "/%s/%s"
-	$taxonomy $tag) -}}
-	<a href="{{ .Permalink }}">{{ $tag | urlize }}</a>
-	{{- end -}} {{- end -}}
+	{{ range $index, $tag := . }} {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy (anchorize $tag)) -}}
+		<a href="{{ .Permalink }}">{{ $tag }}</a>
+	{{- end -}} {{- end }}
 </nav>
 {{ end }}
 
