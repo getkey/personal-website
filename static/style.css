@@ -219,3 +219,7 @@ details > :not(summary) {
 	white-space: pre-wrap;
 	margin: 0;
 }
+
+.poetry {
+	text-indent: 3ch hanging each-line;
+}

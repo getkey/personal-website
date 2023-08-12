@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-<article lang="{{ .Params.lang }}">
+<article lang="{{ .Params.lang }}" {{- if eq .Params.poetry true }} class="poetry" {{- end }}>
 <time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
 
 {{ if .Title }}
