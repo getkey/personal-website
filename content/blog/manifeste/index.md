@@ -31,7 +31,7 @@ Endémiques du Sud radieux
 J'étais venu en conquérant
 Pour y piller le pittoresque
 S'il en restait, car mille pattes
-Avaient mixé le sol de plâtre
+Avaient mêlé le sol de plâtre
 La terre fatiguée m'offrit
 Sans même que je le réclame
 L'admirable matériau
