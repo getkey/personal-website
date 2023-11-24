@@ -4,7 +4,7 @@ lang: "fr"
 tags: ["poésie francitane"]
 poetry: true
 ---
-Ah, quelle bizarre petite montagne de terre
+Quelle bizarre petite montagne de terre
 Dressée dans mon calme gazon, lissement dénudée
 
 Les taupes de fer s'en furent, jamais ne revinrent
