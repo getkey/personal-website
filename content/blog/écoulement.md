@@ -6,7 +6,7 @@ poetry: true
 ---
 Je me suis assoupi dans le lit d'une rivière
 J'ai laissé le courant me porter doucement
-Salué au passage par les saules riants
+Les lauriers en passant me drapaient de leurs feuilles
 
 Je me suis endormi à trop faire la planche
 C'était si agréable car les flots s'échauffaient
