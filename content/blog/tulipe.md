@@ -8,7 +8,7 @@ Le parapluie protège de la pluie
 Mais la capuche le fait aussi
 
 Le parapluie occupe une main
-C'est encombrant, mais pas toujours gênant
+De ceux qui peuvent les avoir libres
 
 En dessous de sa rotonde, il y a souvent
 Un flâneur qui y arpente ses degrés
