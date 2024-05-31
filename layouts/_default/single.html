@@ -1,27 +1,38 @@
 {{ define "main" }}
 
-<article lang="{{ .Params.lang }}" {{- if eq .Params.poetry true }} class="poetry" {{- end }}>
+<article lang="{{ .Params.lang }}">
 <time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
 
-{{ if .Title }}
+{{ if .Title -}}
 	<h1>{{ .Title }}</h1>
-{{ end }}
+{{- end }}
 
-{{ .Content }}
+{{ if isset .Params "reading" -}}
+	<figure class="audio-figure">
+		<audio controls src="{{ .Params.reading }}"></audio>
+		{{ if in .Params.tags "poésie francitane" }}
+			<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement, et qui a souhaité garder l'anonymat.</figcaption>
+		{{- end }}
+	</figure>
+{{- end }}
+
+<div {{- if eq .Params.poetry true }} class="poetry" {{- end }}>
+	{{ .Content }}
+</div>
 
 </article>
 
-{{ if isset .Params "license" }}
-<p class="license">License: {{ .Params.license }}</p>
-{{ end }}
+{{ if isset .Params "license" -}}
+	<p class="license">License: {{ .Params.license }}</p>
+{{- end }}
 
 
-{{ $taxonomy := "tags" }} {{ with .Param $taxonomy }}
-<nav id="tags">
-	{{ range $index, $tag := . }} {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy (anchorize $tag)) -}}
-		<a href="{{ .Permalink }}">{{ $tag }}</a>
-	{{- end -}} {{- end }}
-</nav>
-{{ end }}
+{{ $taxonomy := "tags" }} {{ with .Param $taxonomy -}}
+	<nav id="tags">
+		{{ range $index, $tag := . }} {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy (anchorize $tag)) -}}
+			<a href="{{ .Permalink }}">{{ $tag }}</a>
+		{{- end -}} {{- end }}
+	</nav>
+{{- end }}
 
 {{ end }}

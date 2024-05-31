@@ -204,6 +204,13 @@ details > :not(summary) {
 	text-indent: 3ch hanging each-line;
 }
 
+.audio-figure {
+	margin: 0;
+}
+.audio-caption {
+	color: grey;
+}
+
 /* homepage */
 
 .homepage-content {
