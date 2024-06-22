@@ -18,7 +18,7 @@ Qui se laisse gravir et soumet son sommet
 Aux chatouilles d'un chamois, aux caresses du vent
 Qui consent aux grattouilles d'un lapin de garenne
 Ça serait gentillet (si ce n'est écœurant)
-Mais les voies montagnardes sont impénétrables
+Mais les voies montagnoles sont impénétrables
 Le lapin a tôt fait de périr sous la neige
 Asphyxié par la chute, par le flot congelé
 Recouvrant les sorties de son trou protecteur
