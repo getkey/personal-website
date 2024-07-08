@@ -236,3 +236,16 @@ details > :not(summary) {
 		margin-right: 0;
 	}
 }
+
+table {
+	border-collapse: collapse;
+}
+th, td {
+	padding: 0.5em;
+}
+thead {
+	background-color: #D4D4D4;
+}
+tbody tr:nth-child(odd) {
+	background-color: #E8E8E8;
+}
