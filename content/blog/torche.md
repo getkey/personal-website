@@ -16,7 +16,7 @@ En ce bas-monde puisque ma vie je la dédiais
 
 Posé dessus se trouvait un frigo bouddhique
 Qui du zéro absolu dégage la sécheresse 
-Pas de cryogénie autant être pathétique 
+Pas de cryogénie, plutôt être pathétique 
 
 J'ai pris la torche de mon stress, de mes faiblesses
 La dernière chose qui me reste, et que je veux:
