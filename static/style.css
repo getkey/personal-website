@@ -249,3 +249,8 @@ thead {
 tbody tr:nth-child(odd) {
 	background-color: #E8E8E8;
 }
+
+iframe {
+	width: 100%;
+	border: none;
+}
