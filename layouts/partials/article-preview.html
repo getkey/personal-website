@@ -1,0 +1,9 @@
+<a href="{{ .RelPermalink }}" lang="{{ .Params.lang }}">
+	<article class="preview">
+		<time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
+		{{ if .Title }}
+			<h1>{{ .Title }}</h1>
+		{{ end }}
+		<p class="summary">{{ delimit (split .Summary "\n" | first 4) "\n" }}</p>
+	</article>
+</a>
