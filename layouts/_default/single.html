@@ -10,7 +10,7 @@
 {{ if isset .Params "media" -}}
 	<figure class="audio-figure">
 		<audio controls>
-			{{ range $file, $mime := .Params.media }}
+			{{ range $mime, $file := .Params.media }}
 				<source src="{{ $file }}" type="{{ $mime }}"/>
 			{{ end }}
 		</audio>
