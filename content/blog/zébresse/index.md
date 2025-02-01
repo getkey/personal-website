@@ -3,7 +3,7 @@ date: 2024-04-24T01:01:22+02:00
 lang: "fr"
 tags: ["poésie francitane"]
 poetry: true
-reading: "la zébresse 1.m4a"
+audio: "la zébresse 1.m4a"
 ---
 La semaine dernière pendant l'apéro
 Je contais à mes potes à peu près en ces termes

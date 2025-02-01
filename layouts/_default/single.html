@@ -7,17 +7,21 @@
 	<h1>{{ .Title }}</h1>
 {{- end }}
 
-{{ if isset .Params "reading" -}}
-	<figure class="audio-figure">
-		<audio controls src="{{ .Params.reading }}"></audio>
-		{{ if in .Params.tags "poésie francitane" }}
-			<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement, et qui a souhaité garder l'anonymat.</figcaption>
-		{{- end }}
-	</figure>
-{{- end }}
-
-{{ if isset .Params "youtube" -}}
-<iframe src="https://www.youtube.com/embed/{{ .Params.youtube }}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+{{ if isset .Params "audio" -}}
+	{{ if reflect.IsMap .Params.audio -}}
+		<audio controls>
+			{{ range $key, $value := .Params.audio }}
+				<source src="{{ $value }}" type="{{ $key }}"/>
+			{{ end }}
+		</audio>
+	{{ else }}
+		<figure class="audio-figure">
+			<audio controls src="{{ .Params.audio }}"></audio>
+			{{ if in .Params.tags "poésie francitane" }}
+				<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement, et qui a souhaité garder l'anonymat.</figcaption>
+			{{- end }}
+		</figure>
+	{{- end }}
 {{- end }}
 
 <div {{- if eq .Params.poetry true }} class="poetry" {{- end }}>
