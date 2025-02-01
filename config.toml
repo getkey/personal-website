@@ -1,7 +1,6 @@
 baseURL = 'https://mourer.eu/'
 title = 'Julien Mourer'
 
-
 [taxonomies]
   tag = 'tags'
 

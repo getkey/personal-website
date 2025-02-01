@@ -151,26 +151,6 @@ time {
 	font-size: 0.6em;
 }
 
-details > summary {
-	font-family: "Open Sans", sans-serif;
-	cursor: pointer;
-	user-select: none;
-	color: #ec9200;
-}
-
-details + p > ins, details + ins {
-	text-decoration: none;
-}
-
-details > p > del {
-	text-decoration: none;
-}
-
-details > :not(summary) {
-	display: block;
-	margin-left: 3rem;
-}
-
 #tags {
 	display: flex;
 	justify-content: center;
@@ -194,10 +174,6 @@ details > :not(summary) {
 	text-align: center;
 	font-size: 0.9em;
 	margin-top: 2rem;
-}
-
-.summary {
-	white-space: pre-wrap;
 }
 
 .poetry {
