@@ -2,7 +2,7 @@
 title: "Frontière"
 date: 2024-10-18T19:00:00+02:00
 lang: "fr"
-tags: []
+tags: ["musique"]
 poetry: true
 audio:
   "audio/ogg; codecs=opus": "frontiere.opus"

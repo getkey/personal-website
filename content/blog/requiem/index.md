@@ -2,7 +2,7 @@
 title: "Requiem"
 date: 2024-12-16T20:00:00+01:00
 lang: "fr"
-tags: []
+tags: ["musique"]
 poetry: true
 audio:
   "audio/ogg; codecs=opus": "requiem.opus"
