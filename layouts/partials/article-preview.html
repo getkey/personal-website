@@ -4,6 +4,6 @@
 		{{ if .Title }}
 			<h1>{{ .Title }}</h1>
 		{{ end }}
-		<p class="summary">{{ delimit (split .Summary "\n" | first 4) "\n" }}</p>
+		<p class="summary">{{ delimit (split (.Summary | plainify) "\n" | first 4) "\n" | safeHTML }}</p>
 	</article>
 </a>
