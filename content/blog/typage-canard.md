@@ -1,6 +1,6 @@
 ---
 date: 2023-08-21T00:35:26+02:00
-lang: "fr"
+locale: "fr"
 tags: ["poésie francitane"]
 poetry: true
 ---

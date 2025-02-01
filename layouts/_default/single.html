@@ -1,27 +1,23 @@
 {{ define "main" }}
 
-<article lang="{{ .Params.lang }}">
+<article lang="{{ .Params.locale }}">
 <time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "2006-01-02" }}</time>
 
 {{ if .Title -}}
 	<h1>{{ .Title }}</h1>
 {{- end }}
 
-{{ if isset .Params "audio" -}}
-	{{ if reflect.IsMap .Params.audio -}}
+{{ if isset .Params "media" -}}
+	<figure class="audio-figure">
 		<audio controls>
-			{{ range $key, $value := .Params.audio }}
-				<source src="{{ $value }}" type="{{ $key }}"/>
+			{{ range $file, $mime := .Params.media }}
+				<source src="{{ $file }}" type="{{ $mime }}"/>
 			{{ end }}
 		</audio>
-	{{ else }}
-		<figure class="audio-figure">
-			<audio controls src="{{ .Params.audio }}"></audio>
-			{{ if in .Params.tags "poésie francitane" }}
-				<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement, et qui a souhaité garder l'anonymat.</figcaption>
-			{{- end }}
-		</figure>
-	{{- end }}
+		{{ if in .Params.tags "poésie francitane" }}
+			<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement, et qui a souhaité garder l'anonymat.</figcaption>
+		{{- end }}
+	</figure>
 {{- end }}
 
 <div {{- if eq .Params.poetry true }} class="poetry" {{- end }}>

@@ -2,7 +2,7 @@
 title: "Hoisting in JavaScript"
 tags: ["software"]
 date: "2016-05-12T18:27:45Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/5734cb21/hoisting-in-javascript"]
 ---

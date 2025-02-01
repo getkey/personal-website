@@ -1,7 +1,7 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
-lang: "en"
+locale: "en"
 tags: []
 license: "CC-BY-4.0"
 ---

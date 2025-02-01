@@ -1,10 +1,10 @@
 ---
 title: "Requiem"
 date: 2024-12-16T20:00:00+01:00
-lang: "fr"
+locale: "fr"
 tags: ["musique"]
 poetry: true
-audio:
+media:
   "audio/ogg; codecs=opus": "requiem.opus"
   audio/aac: "requiem.aac"
 ---
@@ -22,7 +22,7 @@ Grace au sommeil je raccourcis le temps
 Sans faire de peine à ma maman
 J'suis plus insomniaque depuis ma dépression
 
-Au compteur je trace à 150 à l'heure   
+Au compteur je trace à 150 à l'heure
 5 minutes à gagner, rien à perdre si je meurs
 Aller prendre une ligne sous un abribus
 Si tout s'vaut, que m'emporte Bacchus !

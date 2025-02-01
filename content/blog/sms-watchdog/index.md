@@ -2,7 +2,7 @@
 title: "SMS Watchdog"
 tags: ["software"]
 date: "2016-03-03T19:51:37Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/56d895c9/sms-watchdog"]
 ---

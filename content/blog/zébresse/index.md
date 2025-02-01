@@ -1,9 +1,10 @@
 ---
 date: 2024-04-24T01:01:22+02:00
-lang: "fr"
+locale: "fr"
 tags: ["poésie francitane"]
 poetry: true
-audio: "la zébresse 1.m4a"
+media:
+  audio/aac: "la zébresse 1.m4a"
 ---
 La semaine dernière pendant l'apéro
 Je contais à mes potes à peu près en ces termes

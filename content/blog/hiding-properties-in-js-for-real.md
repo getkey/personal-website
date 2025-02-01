@@ -2,7 +2,7 @@
 title: "Hiding properties in JS... for real"
 tags: ["software"]
 date: "2017-12-10T15:52:16.556Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/5a2d5830/hiding-properties-in-js…-for-real", "/blog/5a2d5830/hiding-properties-in-js..-for-real"]
 ---

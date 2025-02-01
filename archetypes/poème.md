@@ -1,6 +1,6 @@
 ---
 date: {{ .Date }}
-lang: "fr"
+locale: "fr"
 tags: ["poésie francitane"]
 poetry: true
 ---

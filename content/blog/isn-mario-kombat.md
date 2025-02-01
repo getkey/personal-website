@@ -2,7 +2,7 @@
 title: "Mon projet d'ISN : Mario Kombat"
 tags: ["software"]
 date: "2015-09-27T21:23:31Z"
-lang: "fr"
+locale: "fr"
 license: "CC-BY-4.0"
 aliases: ["/blog/56085e53/mon-projet-d-isn-mario-kombat", "/blog/56085e53/mon-projet-d’isn-:-mario-kombat"]
 ---

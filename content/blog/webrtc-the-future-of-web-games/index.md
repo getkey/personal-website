@@ -2,7 +2,7 @@
 title: "WebRTC: the future of web games"
 tags: ["software"]
 date: "2016-12-27T18:19:59Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/5862b0cf/webrtc:-the-future-of-web-games", "/blog/5862b0cf/webrtc-the-future-of-web-games"]
 ---

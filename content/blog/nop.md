@@ -1,7 +1,7 @@
 ---
 title: "Nouvelle Orthographe Phonologique"
 date: 2024-07-08T22:51:12+02:00
-lang: "fr"
+locale: "fr"
 tags: []
 license: "CC-BY-4.0"
 ---

@@ -1,6 +1,6 @@
 ---
 date: 2024-07-21T16:25:00+02:00
-lang: "fr"
+locale: "fr"
 tags: []
 poetry: true
 ---

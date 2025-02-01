@@ -2,7 +2,7 @@
 title: "WundrBar review"
 tags: ["Soylent-like"]
 date: "2017-03-13T22:15:56Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/58c71a1c/wundrbar-review"]
 ---

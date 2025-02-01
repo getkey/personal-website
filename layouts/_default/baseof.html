@@ -21,6 +21,16 @@
 	{{ range .AlternativeOutputFormats -}}
 		{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 	{{ end -}}
+	{{ template "_internal/opengraph.html" . }}
+	{{- if isset .Params "media" }}
+		{{ $permalink := .Permalink }}
+		{{- range $mime, $file := .Params.media }}
+			{{- if strings.HasPrefix $mime "audio/" }}
+				<meta property="og:audio" content="{{ $permalink }}{{ $file }}">
+				<meta property="og:audio:type" content="{{ $mime }}">
+			{{- end }}
+		{{- end }}
+	{{- end }}
 </head>
 
 <body>

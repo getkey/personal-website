@@ -2,7 +2,7 @@
 title: "A virtual webcam"
 tags: ["software"]
 date: "2015-03-23T19:38:07Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/55106b9f/a-virtual-webcam"]
 ---

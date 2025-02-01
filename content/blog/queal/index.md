@@ -2,7 +2,7 @@
 title: "Queal"
 tags: ["Soylent-like"]
 date: "2016-11-26T20:58:11Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/5839f763/queal"]
 ---

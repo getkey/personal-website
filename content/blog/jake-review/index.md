@@ -2,7 +2,7 @@
 title: "Jake review"
 tags: ["Soylent-like"]
 date: "2017-02-07T22:07:40Z"
-lang: "en"
+locale: "en"
 license: "CC-BY-4.0"
 aliases: ["/blog/589a452c/jake-review"]
 ---
