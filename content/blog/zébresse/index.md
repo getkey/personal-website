@@ -4,7 +4,10 @@ locale: "fr"
 tags: ["poésie francitane"]
 poetry: true
 media:
-  audio/aac: "la zébresse 1.m4a"
+  metadata:
+    Lecteur: Anonyme
+  sources:
+    audio/aac: "la zébresse 1.m4a"
 ---
 La semaine dernière pendant l'apéro
 Je contais à mes potes à peu près en ces termes

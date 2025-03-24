@@ -183,13 +183,6 @@ time {
 	text-indent: 3ch hanging each-line;
 }
 
-.audio-figure {
-	margin: 0;
-}
-.audio-caption {
-	color: grey;
-}
-
 table {
 	border-collapse: collapse;
 }
@@ -206,4 +199,17 @@ tbody tr:nth-child(odd) {
 audio {
 	width: 100%;
 	margin: 0.5rem 0;
+}
+
+.audio-figure {
+	margin: 0;
+}
+.audio-caption {
+	color: grey;
+}
+.audio-metadata tbody tr {
+	background-color: initial;
+}
+.audio-metadata td {
+	padding: 0 1ch 0 0;
 }

@@ -5,8 +5,13 @@ locale: "fr"
 tags: ["musique"]
 poetry: true
 media:
-  "audio/ogg; codecs=opus": "requiem.opus"
-  audio/aac: "requiem.aac"
+  metadata:
+    Compositeur: Chris Janaqi
+    Interprète: Chris Janaqi
+    Parolier: Julien Mourer
+  sources:
+    "audio/ogg; codecs=opus": "requiem.opus"
+    audio/aac: "requiem.aac"
 ---
 J'comprends plus les gens qui trainent sur les écrans
 J'me couche plus tôt que quand j'avais huit ans

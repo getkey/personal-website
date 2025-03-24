@@ -9,13 +9,25 @@
 
 {{ if isset .Params "media" -}}
 	<figure class="audio-figure">
+		{{ if isset .Params.media "metadata" }}
+			<figcaption class="audio-caption">
+				<table class="audio-metadata">
+				{{ range $key, $value := .Params.media.metadata }}
+					<tr>
+						<td>{{ $key }}:</td>
+						<td>{{ $value }}</td>
+					</tr>
+				{{ end }}
+				</table>
+			</figcaption>
+		{{- end }}
 		<audio controls>
-			{{ range $mime, $file := .Params.media }}
+			{{ range $mime, $file := .Params.media.sources }}
 				<source src="{{ $file }}" type="{{ $mime }}"/>
 			{{ end }}
 		</audio>
 		{{ if in .Params.tags "poésie francitane" }}
-			<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement, et qui a souhaité garder l'anonymat.</figcaption>
+			<figcaption class="audio-caption">Tous mes poèmes de la série <a href="/tags/poésie-francitane/">poésie francitane</a> sont faits pour être lus avec l'accent du sud. Si vous ne le pouvez pas, écoutez cette lecture d'une personne que je remercie chaleureusement.</figcaption>
 		{{- end }}
 	</figure>
 {{- end }}

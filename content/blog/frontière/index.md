@@ -5,8 +5,13 @@ locale: "fr"
 tags: ["musique"]
 poetry: true
 media:
-  "audio/ogg; codecs=opus": "frontiere.opus"
-  audio/aac: "frontiere.aac"
+  metadata:
+    Compositeur: Chris Janaqi
+    Interprète: Chris Janaqi
+    Parolier: Julien Mourer
+  sources:
+    "audio/ogg; codecs=opus": "frontiere.opus"
+    audio/aac: "frontiere.aac"
 ---
 Je me ruais à cent à l'heure vers la frontière
 En respirant l'odeur aride de la poussière
