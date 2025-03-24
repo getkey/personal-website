@@ -140,6 +140,9 @@ pre {
 	overflow-x: scroll;
 	padding: 0.3rem;
 }
+code {
+	background-color: #34495e20;
+}
 time {
 	font-variant: small-caps;
 	font-weight: 300;
