@@ -9,13 +9,13 @@ Last summer, I went on a vacation to Greece. I wanted to read directions and ord
 
 But during my trip, I thought of a better way. What if all latin characters on my phone were replaced with Greek characters? Surely, that would be the way to learn effortlessly!
 
-I set that idea aside in a corner of my head until I was invited to Greece again, for a wedding. And so I started coding. After tens of hours of development (instead of a few hours of training), here is the result: [`transliteration-font-maker`](https://github.com/getkey/transliteration-font-maker)!
+I set that idea aside in a corner of my head until I was invited to Greece again, for a wedding. And so I started coding. After tens of hours of development (instead of a few hours of training), here is the result: [`transliteration-fonts`](https://github.com/getkey/transliteration-fonts)!
 
 ## The tools
 
-I decided to use [FontForge](https://fontforge.org). FontForge is the established libre software for creating fonts, and a lot of libre fonts are made with it. I want to be able to redistribute my modified fonts so this is important. It also provides a Python scripting interface, so once made, I can automate the modification of as many fonts as I want. 
+I'm using [fontTools](https://fonttools.readthedocs.io/en/latest/). This is a Python library that allows editing TrueType/OpenType fonts. It's not the easiest to use, so initially, I was using [FontForge](https://fontforge.org) instead. Unfortunately, FontForge is slow and is limited to its own format, and thus, there weren't as many fonts that I could modify. `fontTools` can modify any `.ttf` or `.otf` file!
 
-I decided to use the [Liberation font family](https://en.wikipedia.org/wiki/Liberation_fonts). It doesn't cover many writing systems, but it does cover latin and greek, which is my initial aim. It's a trusty font family that works well enough for my purpose.
+In particular, I wanted to be able to modify the [Noto](https://en.wikipedia.org/wiki/Noto_fonts) family of fonts, as they have both a huge coverage of Unicode, and are open source. This is important because I want to be able to redistribute them.
 
 ## The GSUB table
 
@@ -90,7 +90,7 @@ There is a last type of substitution we haven't covered, multiple character to m
 
 Unfortunately, TrueType/OpenType doesn't have straightforward support for this kind of substitution. If you want to do this, you have to pull out the big gun: [contextual substitutions](https://fontforge.org/docs/ui/dialogs/contextchain.html). This is a very powerful type of substitution that allows replacing characters based on the other characters around it. But this makes it unwieldy.
 
-Given that greek to latin transliteration doesn't require it, I haven't implemented this feature. This is the main limitation of `transliteration-font-maker`, many scripts can't be transliterated with it yet because of this.
+Given that greek to latin transliteration doesn't require it, I haven't implemented this feature. This is the main limitation of `transliteration-fonts`, many scripts can't be transliterated with it yet because of this.
 
 As a side-note: in greek, `σ` in word-final position becomes `ς`. You need a contextual substitution for that feature. My font doesn't do it, so it's not 100% correct.
 
@@ -108,7 +108,7 @@ For example, `rand` indicates that a character must be randomly substituted with
 
 ## Playground
 
-Do you want to try this out for yourself? I've created a playground below. You can also [download the fonts](https://github.com/getkey/transliteration-font-maker/releases) from GitHub.
+Do you want to try this out for yourself? I've created a playground below. You can also [download the fonts](https://github.com/getkey/transliteration-fonts/releases) from GitHub.
 
 <style>
 	@font-face {
