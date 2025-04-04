@@ -84,15 +84,33 @@ The quick brown fox jumps over the lazy dog
 Θε quιcκ βροwν fοξ juμφ οvερ θε λαzυ δογ
 ```
 
-## Contextual substitutions
+## Multiple to multiple substitutions
 
 There is a last type of substitution we haven't covered, multiple character to multiple characters. For example, in [Kunrei-shiki](https://en.wikipedia.org/wiki/Kunrei-shiki_romanization), `きゃ` becomes `kya`.
 
-Unfortunately, TrueType/OpenType doesn't have straightforward support for this kind of substitution. If you want to do this, you have to pull out the big gun: [contextual substitutions](https://fontforge.org/docs/ui/dialogs/contextchain.html). This is a very powerful type of substitution that allows replacing characters based on the other characters around it. But this makes it unwieldy.
+Unfortunately, TrueType/OpenType doesn't have support for this kind of substitution.
 
-Given that greek to latin transliteration doesn't require it, I haven't implemented this feature. This is the main limitation of `transliteration-fonts`, many scripts can't be transliterated with it yet because of this.
+But there is a hack. You can make a dummy glyph! Then you split your substitution in two pieces:
 
-As a side-note: in greek, `σ` in word-final position becomes `ς`. You need a contextual substitution for that feature. My font doesn't do it, so it's not 100% correct.
+```
+きゃ → single_dummy_glyph
+single_dummy_glyph → kya
+```
+
+And just like that, I turned a multiple to multiple substitution into a ligature and a single to multiple substitution!
+
+## Contextual substitutions
+
+In greek, `σ` in word-final position becomes `ς`.
+
+```
+Σοφιστής
+Sophistḗs
+```
+
+In other words, the character depends on the _context_. And you make this work with [contextual substitutions](https://glyphsapp.com/learn/features-part-2-contextual-substitutions).
+
+For all other types of substitution, I have a simple `.tsv` file that maps characters to other characters. This is too simple for contextual substitutions. But since in greek, only one character is affected, I decided not to bother with that feature.
 
 ## Feature tag
 
