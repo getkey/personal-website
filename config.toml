@@ -11,9 +11,5 @@ title = 'Julien Mourer'
     hardWraps = true
     unsafe = true
 
-[module]
-  [[module.imports]]
-    path = "github.com/kaushalmodi/hugo-atom-feed"
-
 [outputs]
-  section = ["HTML", "RSS", "ATOM"]
+  section = ["HTML", "RSS"]
