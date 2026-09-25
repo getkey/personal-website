@@ -126,7 +126,7 @@ For example, `rand` indicates that a character must be randomly substituted with
 
 ## Playground
 
-Do you want to try this out for yourself? I've created a playground below. You can also [download the fonts](https://github.com/getkey/transliteration-fonts/releases) from GitHub.
+Do you want to try this out for yourself? The switcher at the bottom changes the font of this entire page. You can also [download the fonts](https://github.com/getkey/transliteration-fonts/releases) from GitHub.
 
 <style>
 	@font-face {
@@ -137,28 +137,67 @@ Do you want to try this out for yourself? I've created a playground below. You c
 		font-family: Osvobozdenie;
 		src: url('./OsvobozdenieSerif-Regular.woff2');
 	}
-	textarea {
-		width: 100%;
-		height: 15ch;
-		font-family: serif;
+
+	body:has(#apeleutherosis:checked),
+	body:has(#apeleutherosis:checked) * {
+		font-family: Apeleutherosis, serif;
 	}
-	#apeleutherosis:checked ~ .playground {
-		font-family: Apeleutherosis;
+	body:has(#osvobozdenie:checked),
+	body:has(#osvobozdenie:checked) * {
+		font-family: Osvobozdenie, serif;
 	}
-	#osvobozdenie:checked ~ .playground {
-		font-family: Osvobozdenie;
+
+	/* the switcher floats above the page. nothing between it and the
+	   viewport sets transform/filter/contain, so `fixed` works. */
+	.font-switcher {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 1rem;
+		width: fit-content;
+		max-width: calc(100vw - 2rem);
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.2rem;
+		padding: 0.4rem 0.6rem;
+		font-size: 0.9rem;
+		font-family: "Open Sans", sans-serif;
+		background-color: white;
+		border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+		border-radius: 0.25rem;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	}
+	.font-switcher input {
+		accent-color: var(--accent);
+	}
+	.font-switcher label {
+		cursor: pointer;
+		padding: 0.25rem 0.4rem;
+		border-radius: 0.25rem;
+	}
+	.font-switcher label:hover {
+		background-color: color-mix(in srgb, var(--accent) 12.5%, transparent);
+	}
+	.font-switcher input:checked + label {
+		background-color: var(--accent);
+		color: white;
+	}
+
+	@media print {
+		.font-switcher {
+			display: none;
+		}
 	}
 </style>
 
-<form>
-<input type="radio" name="font" id="apeleutherosis" checked/>
+<form class="font-switcher">
+<input type="radio" name="font" id="apeleutherosis"/>
 <label for="apeleutherosis">latin ↔ greek</label>
 
 <input type="radio" name="font" id="osvobozdenie"/>
-<label for="osvobozdenie">latin ↔ cyrilic</label>
+<label for="osvobozdenie">latin ↔ cyrillic</label>
 
-<input type="radio" name="font" id="default"/>
+<input type="radio" name="font" id="default" checked/>
 <label for="default">Default</label>
-
-<textarea class="playground" placeholder="Write some text here..."></textarea>
 </form>

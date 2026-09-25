@@ -1,12 +1,19 @@
+:root {
+	--text: #3a4145;
+	--muted: grey;
+	--background: #fdfdfd; /* makes blogpost cards pop out */
+	--accent: #34495e;
+}
+
 * {
 	box-sizing: border-box;
 }
 
 body {
-	color: #3a4145;
+	color: var(--text);
 	font-family: Merriweather, serif;
 	margin: 0;
-	background-color: #fdfdfd; /* makes blogpost cards look better */
+	background-color: var(--background);
 }
 main {
 	max-width: 80ch;
@@ -54,7 +61,7 @@ p, li {
 	justify-content: space-between;
 	align-items: stretch;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
-	background-color: #34495e;
+	background-color: var(--accent);
 }
 #navbar ul {
 	display: flex;
@@ -84,7 +91,7 @@ p, li {
 	display: inline-block;
 }
 #navbar a:hover {
-	background-color: #2C3E50;
+	background-color: color-mix(in srgb, var(--accent) 85%, black);
 }
 
 #navbar > a {
@@ -133,7 +140,7 @@ article.preview::after {
 	left: 0;
 	right: 0;
 	height: 4rem;
-	background: linear-gradient(#fdfdfd00, 30%, #fdfdfd);
+	background: linear-gradient(transparent, 30%, var(--background));
 }
 
 pre {
@@ -141,7 +148,7 @@ pre {
 	padding: 0.3rem;
 }
 code {
-	background-color: #34495e20;
+	background-color: color-mix(in srgb, var(--accent) 12.5%, transparent);
 }
 time {
 	font-variant: small-caps;
@@ -162,8 +169,8 @@ time {
 
 #tags > a {
 	display: inline-block;
-	border: 1px solid grey;
-	color: grey;
+	border: 1px solid var(--muted);
+	color: var(--muted);
 	padding: 0.5ch;
 	border-radius: 3px;
 	text-decoration: none;
@@ -173,7 +180,7 @@ time {
 }
 
 .license {
-	color: grey;
+	color: var(--muted);
 	text-align: center;
 	font-size: 0.9em;
 	margin-top: 2rem;
@@ -190,10 +197,10 @@ th, td {
 	padding: 0.5em;
 }
 thead {
-	background-color: #D4D4D4;
+	background-color: #d4d4d4;
 }
 tbody tr:nth-child(odd) {
-	background-color: #E8E8E8;
+	background-color: #e8e8e8;
 }
 
 audio {
@@ -205,7 +212,7 @@ audio {
 	margin: 0;
 }
 .audio-caption {
-	color: grey;
+	color: var(--muted);
 }
 .audio-metadata tbody tr {
 	background-color: initial;
